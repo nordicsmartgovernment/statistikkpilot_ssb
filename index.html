@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="no">
+    <head>
+        <title>Pilot: Rapportering til SSB basert på SAF-T</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.min.css" />
+        <script defer src="https://pyscript.net/latest/pyscript.min.js"></script>
+
+    </head>
+    <body>
+        <py-config>
+            # packages = ["pandas", "matplotlib"]
+
+            #[[runtimes]]
+            #    src = "static/pyodide/pyodide.js"
+            #    name = "pyodide-0.22.1"
+            #    lang = "python"
+            
+            #[[fetch]]
+            #from = "static/python/"
+            #files = ["saft2dataframe.py", "analyse.py", "request.py"]
+            
+    
+        </py-config>
+        <py-script src="static/python/main.py">
+        </py-script>
+
+    <main>
+        <py-repl auto-generate="true">
+        1+1
+        </py-repl>
+    </main>
+    
+    </body>
+</html>
