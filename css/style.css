@@ -1,0 +1,17 @@
+header {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+header > h1 {
+    padding: 1em;
+    background-color: #f3f5f6;
+}
+
+main {
+    max-width: 650px;
+    margin: 0 auto;
+}
+article {
+    padding: 1em;
+}

@@ -5,32 +5,69 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/style.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.min.css" />
+        <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
         <script defer src="https://pyscript.net/latest/pyscript.min.js"></script>
 
     </head>
     <body>
         <py-config>
-            # packages = ["pandas", "matplotlib"]
-
-            #[[runtimes]]
-            #    src = "static/pyodide/pyodide.js"
-            #    name = "pyodide-0.22.1"
-            #    lang = "python"
-            
-            #[[fetch]]
-            #from = "static/python/"
-            #files = ["saft2dataframe.py", "analyse.py", "request.py"]
-            
+        packages = ["pandas"]            
     
         </py-config>
-        <py-script src="static/python/main.py">
+
+        <py-script src="main.py">
         </py-script>
 
+    <header>
+<img src="https://nordicsmartgovernment.org/themes/custom/newerst/lbe/Nordic_Smart_Government_and_Business_logo.svg" alt="Nordic smart government and Business logo" width="103" height="40">
+<h1>Pilot: Rapportering til SSB basert på SAF-T</h1>
+    </header>
+
     <main>
-        <py-repl auto-generate="true">
-        1+1
-        </py-repl>
+
+    
+    <article id="intro">
+    <h1>Introduksjon</h1>
+    <p>Dette er en pilot for å forenkle rapporteringen til SSB. Den dekker i første omgang rapportering til
+    <a href="https://www.ssb.no/varehandel-og-tjenesteyting/varehandel/statistikk/varehandelsindeksen">varehandelsindeksen</a>.
+    Istedenfor å finne de relevante omsetningstallene manuelt, inneholder denne siden kode som kan hente de relevante tallene
+    fra en oppdatert SAF-T-fil. Følg instruksjonene under.</p>
+    <py-script>
+    </py-script>
+    </article>
+
+
+    <article id="a1">
+    <h1>Steg 1: Velg fil</h1>
+    <p></p>
+    <py-script>
+    </py-script>
+    </article>
+
+    <article id="a2">
+    <h1>Steg 2: Velg rapporteringsperiode</h1>
+    <p></p>
+    <py-script>
+    </py-script>
+        
+    </article>
+
+    <article id="a3">
+    <h1>Steg 3: Kjør analysen og verifiser resultatet</h1>
+    <p></p>
+    <py-script>
+    </py-script>
+        
+    </article>
+
+    <article id="a4">
+    <h1>Steg 4: Send inn tallene til SSB</h1>
+    <p></p>
+    <py-script>
+    </py-script>
+        
+    </article>
+
     </main>
     
     </body>
