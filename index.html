@@ -11,7 +11,12 @@
     </head>
     <body>
         <py-config>
-        packages = ["pandas"]            
+        packages = ["pandas"]  
+
+        [[fetch]]
+        #from = "static/python/"
+        files = ["saft2dataframe.py", "request.py"]
+          
     
         </py-config>
 
@@ -38,13 +43,18 @@
 
 
     <article id="a1">
-    <h1>Steg 1: Velg fil</h1>
-    <p></p>
-    <py-script>
-    </py-script>
+    <h1>Steg 1: Velg SAF-T-fil</h1>
+    <p>Eksporter en SAF-T-fil fra regnskapssystemet. Bokføringen må være oppdatert for perioden det skal rapporteres for. Detaljene i fila blir <em>ikke</em> delt med mottakeren</p>
+    <p style="font-size: small">Bruk <a href="https://raw.githubusercontent.com/Skatteetaten/saf-t/master/Example%20Files/ExampleFile%20SAF-T%20Financial_999999999_20161125213512.xml">
+    denne</a> hvis du ikke har en fil og vil teste løsningen. Inneholder kun data for 2017.</p>
+    <label for="saftfil">Velg fil:</label>
+    <input type="file" id="saftfil" name="saftfil"/>
+
+    <p id="resultat_a1" class="resultat">
+    </p>
     </article>
 
-    <article id="a2">
+    <article id="a2" class="hidden">
     <h1>Steg 2: Velg rapporteringsperiode</h1>
     <p></p>
     <py-script>
@@ -52,7 +62,7 @@
         
     </article>
 
-    <article id="a3">
+    <article id="a3" class="hidden">
     <h1>Steg 3: Kjør analysen og verifiser resultatet</h1>
     <p></p>
     <py-script>
@@ -60,11 +70,19 @@
         
     </article>
 
-    <article id="a4">
+    <article id="a4" class="hidden">
     <h1>Steg 4: Send inn tallene til SSB</h1>
     <p></p>
     <py-script>
     </py-script>
+        
+    </article>
+
+    <article id="debug">
+    <h1>Debug: Her kan du kjøre egen kode</h1>
+    <p>Bruk den såkalte REPL nedenfor for å kjøre egen kode. Dataene fra SAF-T-fila er tilgjengelige i variabelen <code>saft</code></p>
+    <py-repl auto-generate="true">
+    </py-repl>
         
     </article>
 

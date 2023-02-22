@@ -15,3 +15,17 @@ main {
 article {
     padding: 1em;
 }
+
+
+#debug {
+    font-size: small;
+    color: grey;
+}
+
+.hidden {
+    display: none;
+}
+
+.resultat {
+    color: green;
+}
