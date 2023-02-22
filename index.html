@@ -77,9 +77,13 @@
 
     <article id="a2" class="hidden">
     <h1>Steg 2: Velg rapporteringsperiode</h1>
-    <p></p>
-    <py-script>
-    </py-script>
+    <p>Skriv inn årstall og måneden det skal rapporteres for, og kjør koden (Shift-Enter).</p>
+    <py-repl>
+    år = 2017  # fordi testfilen bar har data for januar
+    måned = 1  # 1 er januar, 2 er februar osv
+    
+    Element('a3').remove_class('hidden')
+    </py-repl>
         
     </article>
 
@@ -87,7 +91,29 @@
     <h1>Steg 3: Kjør analysen og verifiser resultatet</h1>
     <p></p>
     <py-script>
+      def omsetning(år: int, måned: int) -> str:
+        fra = f'{år}-{måned}-01'
+        til = f'{år}-{måned + 1}-01'
+        resultat = saft.loc[
+              (    # filtering transactions:
+                  saft['Transaction.TransactionDate'] >= fra)     
+                  & (saft['Transaction.TransactionDate'] < til)   
+                  & (saft['Line.AccountID'] >= 3000)          
+                  & (saft['Line.AccountID'] < 4000)] \
+                  [[  
+                  'Line.DebitAmount.Amount',  # selecting the amount-columns
+                  'Line.TaxAmount.Amount',
+                  'Line.CreditAmount.Amount',]].sum()
+        
+        return f'''Resultatet:  
+              Debit: {resultat['Line.DebitAmount.Amount']} | 
+              Skatt: {resultat['Line.TaxAmount.Amount']} | 
+              Kredit: {resultat[ 'Line.CreditAmount.Amount']}'''
+
     </py-script>
+    <py-repl>
+    omsetning(år, måned)  # år og måned er fra forrige steg
+    </py-repl>
         
     </article>
 
