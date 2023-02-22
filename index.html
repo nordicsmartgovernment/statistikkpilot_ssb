@@ -37,8 +37,18 @@
     <a href="https://www.ssb.no/varehandel-og-tjenesteyting/varehandel/statistikk/varehandelsindeksen">varehandelsindeksen</a>.
     Istedenfor å finne de relevante omsetningstallene manuelt, inneholder denne siden kode som kan hente de relevante tallene
     fra en oppdatert SAF-T-fil. Følg instruksjonene under.</p>
+    <p>Du kan også skru på et eget Python-vindu for å kjøre kode du skriver selv: 
+</p>
     <py-script>
+    def display_debug():
+        # this fails because we don't have any implicit target
+        # from event handlers
+        el = Element('debug')
+        el.remove_class('hidden')
+        display('Python-vindu vises nå nederst på siden.', target="debug_respons")
     </py-script>
+    <button id="my-button" py-onClick="display_debug()">Vis Python-vindu</button>
+    <div id="debug_respons"></div>
     </article>
 
 
@@ -78,10 +88,13 @@
         
     </article>
 
-    <article id="debug">
+    <article id="debug" class="hidden">
     <h1>Debug: Her kan du kjøre egen kode</h1>
     <p>Bruk den såkalte REPL nedenfor for å kjøre egen kode. Dataene fra SAF-T-fila er tilgjengelige i variabelen <code>saft</code></p>
     <py-repl auto-generate="true">
+    # kjør denne cellen (Shift-Enter) og få liste over kolonnene
+    # NB! Hvis du ikke har åpnet en SAF-T fil ennå er listen over kolonner tom
+    saft.columns
     </py-repl>
         
     </article>
