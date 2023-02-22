@@ -41,13 +41,21 @@
 </p>
     <py-script>
     def display_debug():
-        # this fails because we don't have any implicit target
-        # from event handlers
         el = Element('debug')
         el.remove_class('hidden')
+        el = Element('debug_respons')
+        el.clear()
         display('Python-vindu vises nå nederst på siden.', target="debug_respons")
+    
+    def skjul_debug():
+        el = Element('debug')
+        el.add_class('hidden')
+        el = Element('debug_respons')
+        el.clear()
+
     </py-script>
-    <button id="my-button" py-onClick="display_debug()">Vis Python-vindu</button>
+    <button id="display_debug" py-onClick="display_debug()">Vis Python-vindu</button>  <button id="skjul_debug" py-onClick="skjul_debug()">Skjul Python-vindu</button>
+
     <div id="debug_respons"></div>
     </article>
 
