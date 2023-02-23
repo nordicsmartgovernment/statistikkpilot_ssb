@@ -38,8 +38,7 @@
     <a href="https://www.ssb.no/varehandel-og-tjenesteyting/varehandel/statistikk/varehandelsindeksen">varehandelsindeksen</a>.
     Istedenfor å finne de relevante omsetningstallene manuelt, inneholder denne siden kode som kan hente de relevante tallene
     fra en oppdatert SAF-T-fil. Følg instruksjonene under.</p>
-    <p>Du kan også skru på et eget Python-vindu for å kjøre kode du skriver selv: 
-</p>
+    <p style="font-size: small">Du kan også skru på et eget Python-vindu for å kjøre kode du skriver selv:</p>
     <py-script>
     def display_debug():
         el = Element('debug')
@@ -94,9 +93,13 @@
     <py-script>
       def finn_omsetning(år: int, måned: int) -> str:
         fra = f'{år}-{måned}-01'
-        til = f'{år}-{måned + 1}-01'
+        til = f'{år}-{måned + 1}-01'  # funker ikke hvis måned er 12 ...
         global omsetning
-        omsetning = saft.loc[
+        omsetning = {
+            'år': år,
+            'måned': måned,
+        }
+        omsetning.update(dict(saft.loc[
               (    # filtering transactions:
                   saft['Transaction.TransactionDate'] >= fra)     
                   & (saft['Transaction.TransactionDate'] < til)   
@@ -105,25 +108,44 @@
                   [[  
                   'Line.DebitAmount.Amount',  # selecting the amount-columns
                   'Line.TaxAmount.Amount',
-                  'Line.CreditAmount.Amount',]].sum()
+                  'Line.CreditAmount.Amount',]].sum()))
         
-        display(f'''Resultatet:  
-              År: {år} |
+        display(f'''År: {år} |
               Måned: {måned} |
               Debit: {omsetning['Line.DebitAmount.Amount']} | 
               Skatt: {omsetning['Line.TaxAmount.Amount']} | 
               Kredit: {omsetning[ 'Line.CreditAmount.Amount']}''', target="resultat_finn_omsetning")
+        
+        Element('a4').remove_class('hidden')
 
     </py-script>
     <button id="finn_omsetning" py-onClick="finn_omsetning(år, måned)">Finn omsetning</button>    
     <p id="resultat_finn_omsetning"></p>
     </article>
 
+
     <article id="a4" class="hidden">
     <h1>Steg 4: Send inn tallene til SSB</h1>
-    <p></p>
+    <p>Klikk for å sende tallene til (for tiden ...) et dummy-API hos jsonplaceholder.typicode.com.</p>
     <py-script>
+
+    async def api_kall(data, baseurl):
+        headers = {"Content-type": "application/json"}
+        new_post = await request(f"{baseurl}/posts", body=data, method="POST", headers=headers)
+        display(f"""Har POSTet følgende json:
+            {await new_post.json()}
+            Statuskode: {new_post.status}. (201 betyr at det var vellykket!)""",
+            target='resultat_send_inn_tallene')
+  
+    def send_inn():
+        baseurl = "https://jsonplaceholder.typicode.com"
+        data = json.dumps(omsetning)
+        asyncio.ensure_future(api_kall(data, baseurl))
+
     </py-script>
+    <button id="send_inn_tallene" py-onClick="send_inn()">Send inn</button>    
+
+    <p id="resultat_send_inn_tallene"></p>
         
     </article>
 
