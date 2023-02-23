@@ -18,6 +18,7 @@ from saft2dataframe import saft2dataframe
 
 saft_innhold = ""  # global variabel, teksten fra saft-fila
 saft = pd.DataFrame()  # global variabel
+omsetning = pd.DataFrame() # global variabel
 
 def hent_saft_innhold() -> io.StringIO:
     if saft_innhold == "":

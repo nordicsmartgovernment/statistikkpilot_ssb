@@ -4,6 +4,7 @@
         <title>Pilot: Rapportering til SSB basert på SAF-T</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="https://nordicsmartgovernment.org/themes/custom/newerst/favicon.ico" type="image/vnd.microsoft.icon">
         <link href="css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
         <script defer src="https://pyscript.net/latest/pyscript.min.js"></script>
@@ -89,12 +90,13 @@
 
     <article id="a3" class="hidden">
     <h1>Steg 3: Kjør analysen og verifiser resultatet</h1>
-    <p></p>
+    <p>Klikk knappen nedenfor for å finne omsetning for perioden du spesifiserte i forrige steg.</p>
     <py-script>
-      def omsetning(år: int, måned: int) -> str:
+      def finn_omsetning(år: int, måned: int) -> str:
         fra = f'{år}-{måned}-01'
         til = f'{år}-{måned + 1}-01'
-        resultat = saft.loc[
+        global omsetning
+        omsetning = saft.loc[
               (    # filtering transactions:
                   saft['Transaction.TransactionDate'] >= fra)     
                   & (saft['Transaction.TransactionDate'] < til)   
@@ -105,16 +107,16 @@
                   'Line.TaxAmount.Amount',
                   'Line.CreditAmount.Amount',]].sum()
         
-        return f'''Resultatet:  
-              Debit: {resultat['Line.DebitAmount.Amount']} | 
-              Skatt: {resultat['Line.TaxAmount.Amount']} | 
-              Kredit: {resultat[ 'Line.CreditAmount.Amount']}'''
+        display(f'''Resultatet:  
+              År: {år} |
+              Måned: {måned} |
+              Debit: {omsetning['Line.DebitAmount.Amount']} | 
+              Skatt: {omsetning['Line.TaxAmount.Amount']} | 
+              Kredit: {omsetning[ 'Line.CreditAmount.Amount']}''', target="resultat_finn_omsetning")
 
     </py-script>
-    <py-repl>
-    omsetning(år, måned)  # år og måned er fra forrige steg
-    </py-repl>
-        
+    <button id="finn_omsetning" py-onClick="finn_omsetning(år, måned)">Finn omsetning</button>    
+    <p id="resultat_finn_omsetning"></p>
     </article>
 
     <article id="a4" class="hidden">
@@ -127,7 +129,8 @@
 
     <article id="debug" class="hidden">
     <h1>Debug: Her kan du kjøre egen kode</h1>
-    <p>Bruk den såkalte REPL nedenfor for å kjøre egen kode. Dataene fra SAF-T-fila er tilgjengelige i variabelen <code>saft</code></p>
+    <p>Bruk den såkalte REPL nedenfor for å kjøre egen kode. Dataene fra SAF-T-fila er tilgjengelige i variabelen <code>saft</code>.
+    Etter at du har kjørt steg 3, er omsetningen tilgjengelig i variabelen <code>omsetning</code></p>
     <py-repl auto-generate="true">
     # kjør denne cellen (Shift-Enter) og få liste over kolonnene
     # NB! Hvis du ikke har åpnet en SAF-T fil ennå er listen over kolonner tom
