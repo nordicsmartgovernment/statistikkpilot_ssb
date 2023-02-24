@@ -29,8 +29,19 @@
 <h1>Pilot: Rapportering til SSB basert på SAF-T</h1>
     </header>
 
-    <main>
+    <main id="main">
+    <py-script>
+            
+    def aktiver_debug_modus():  # må også laste testfila automatisk ...
+        main = Element('main')
+        el = main.select(".hidden")  # velger bare den første ... - hvordan finne alle?
+        el.remove_class("hidden")
 
+
+    if js.document.location.hash == '#debug':  # dette funker: Oppdager om det står #debug i URL-en
+        aktiver_debug_modus()
+
+    </py-script>
     
     <article id="intro">
     <h1>Introduksjon</h1>

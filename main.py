@@ -11,7 +11,7 @@ from pyscript import Element
 
 # egne moduler
 from saft2dataframe import saft2dataframe
-
+        
   
 # Koden for å lese fil er hentet fra her:
 # https://github.com/amrrs/pyscript-file-uploader/blob/main/index.html
@@ -80,4 +80,3 @@ def oppsett_for_lesing_av_lokal_fil():
 
 
 oppsett_for_lesing_av_lokal_fil()
-   
