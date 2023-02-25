@@ -31,16 +31,6 @@
 
     <main id="main">
     <py-script>
-            
-    def aktiver_debug_modus():  # må også laste testfila automatisk ...
-        main = Element('main')
-        el = main.select(".hidden")  # velger bare den første ... - hvordan finne alle?
-        el.remove_class("hidden")
-
-
-    if js.document.location.hash == '#debug':  # dette funker: Oppdager om det står #debug i URL-en
-        aktiver_debug_modus()
-
     </py-script>
     
     <article id="intro">
@@ -175,4 +165,18 @@
     </main>
     
     </body>
+
+<script>
+// hvis URL-en slutter med #debug så vises hele siden
+if (document.location.hash === "#debug") {
+    console.log('Er i debug-modus');
+    console.log(document.querySelectorAll('.hidden'))
+    for (let name of document.querySelectorAll(".hidden")) {
+        console.log('Skal fjerne hidden for element med id ${name}')
+        name.classList.replace('hidden', 'visible')
+    };
+    console.log('nå skal alle hidden være fjernet');
+}
+</script>
+
 </html>
