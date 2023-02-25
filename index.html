@@ -30,8 +30,6 @@
     </header>
 
     <main id="main">
-    <py-script>
-    </py-script>
     
     <article id="intro">
     <h1>Introduksjon</h1>
@@ -44,12 +42,14 @@
     def display_debug():
         el = Element('debug')
         el.remove_class('hidden')
+        el.add_class('visible')
         el = Element('debug_respons')
         el.clear()
         display('Python-vindu vises nå nederst på siden.', target="debug_respons")
     
     def skjul_debug():
         el = Element('debug')
+        el.remove_class('visible')
         el.add_class('hidden')
         el = Element('debug_respons')
         el.clear()
@@ -74,6 +74,12 @@
 
     <p id="resultat_a1" class="resultat">
     </p>
+    <py-repl class="hidden">
+    # Bruk vedlagte eksempelfil (hentet fra Skatteetatens Github)
+    url = ("kopi_av_eksempelfil_888888888_20180228235959_fra_Skatteetatens_github.xml")
+    saft = saft2dataframe(open_url(url))
+    </py-repl>
+
     </article>
 
     <article id="a2" class="hidden">
