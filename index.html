@@ -77,7 +77,7 @@
     <py-repl class="hidden">
     # Bruk vedlagte eksempelfil (hentet fra Skatteetatens Github)
     url = ("kopi_av_eksempelfil_888888888_20180228235959_fra_Skatteetatens_github.xml")
-    saft = saft2dataframe(open_url(url))
+    saft, orgnr = saft2dataframe(open_url(url))
     </py-repl>
 
     </article>
@@ -101,8 +101,9 @@
       def finn_omsetning(år: int, måned: int) -> str:
         fra = f'{år}-{måned}-01'
         til = f'{år}-{måned + 1}-01'  # funker ikke hvis måned er 12 ...
-        global omsetning
+        global omsetning, orgnr
         omsetning = {
+            'Orgnr': orgnr,
             'år': år,
             'måned': måned,
         }
@@ -117,7 +118,8 @@
                   'Line.TaxAmount.Amount',
                   'Line.CreditAmount.Amount',]].sum()))
         
-        display(f'''År: {år} |
+        display(f'''Orgnr: {orgnr} |
+              År: {år} |
               Måned: {måned} |
               Debit: {omsetning['Line.DebitAmount.Amount']} | 
               Skatt: {omsetning['Line.TaxAmount.Amount']} | 

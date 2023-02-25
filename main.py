@@ -19,6 +19,7 @@ from saft2dataframe import saft2dataframe
 saft_innhold = ""  # global variabel, teksten fra saft-fila
 saft = pd.DataFrame()  # global variabel
 omsetning = pd.DataFrame() # global variabel
+orgnr: str = ""  #
 
 def hent_saft_innhold() -> io.StringIO:
     if saft_innhold == "":
@@ -33,12 +34,12 @@ def read_complete(event) -> pd.DataFrame:
 # event is ProgressEvent
 
     content = document.getElementById("content")
-    global saft_innhold, saft
+    global saft_innhold, saft, orgnr
     saft_innhold = event.target.result
 #    print(f'Har oppdatert saft_innhold: {saft_innhold[:100]}')
 
 
-    saft = saft2dataframe(hent_saft_innhold())
+    saft, orgnr = saft2dataframe(hent_saft_innhold())
 #    print(f'''har oppdatert saft dataframe, med innholdet i saft-fila som begynner med {saft_innhold[:100]}
 #
 #          Variabelen saft har følgende kolonner: {saft.columns}''')

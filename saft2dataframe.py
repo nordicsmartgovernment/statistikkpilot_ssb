@@ -9,9 +9,9 @@
 
 import pandas as pd
 import xml.etree.ElementTree as ET
-from typing import List
+from typing import List, Tuple
 
-def saft2dataframe(file: str) -> pd.DataFrame:
+def saft2dataframe(file: str) -> Tuple[pd.DataFrame, str]:
     '''
         leser en SAF-T Financial NO-fil og returnerer alle "Transaction"
         som en pandas DataFrame
@@ -21,6 +21,10 @@ def saft2dataframe(file: str) -> pd.DataFrame:
         return None
         
     tree = ET.parse(file)
+
+    registration_number = tree.getroot().findtext('n1:Header/n1:Company/n1:RegistrationNumber', namespaces={
+        'n1': 'urn:StandardAuditFile-Taxation-Financial:NO'
+    })
 
     df = pd.DataFrame()
 
@@ -68,7 +72,7 @@ def saft2dataframe(file: str) -> pd.DataFrame:
         'Line.CreditAmount.Amount': float,
     #    'Line.CustomerID': str,
     })
-    return df
+    return (df, registration_number)
 
 
 def process_line(line: ET.Element) -> dict:
