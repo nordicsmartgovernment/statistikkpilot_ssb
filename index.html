@@ -39,6 +39,7 @@
     fra en oppdatert SAF-T-fil. Følg instruksjonene under.</p>
     <p style="font-size: small">Du kan også skru på et eget Python-vindu for å kjøre kode du skriver selv:</p>
     <py-script>
+
     def display_debug():
         el = Element('debug')
         el.remove_class('hidden')
@@ -121,9 +122,10 @@
         display(f'''Orgnr: {orgnr} |
               År: {år} |
               Måned: {måned} |
-              Debit: {omsetning['Line.DebitAmount.Amount']} | 
-              Skatt: {omsetning['Line.TaxAmount.Amount']} | 
-              Kredit: {omsetning[ 'Line.CreditAmount.Amount']}''', target="resultat_finn_omsetning")
+              Debit: kr {omsetning['Line.DebitAmount.Amount']} | 
+              Skatt: kr{omsetning['Line.TaxAmount.Amount']} | 
+              Kredit: kr {omsetning[ 'Line.CreditAmount.Amount']}''',
+            target="resultat_finn_omsetning")
         
         Element('a4').remove_class('hidden')
 
