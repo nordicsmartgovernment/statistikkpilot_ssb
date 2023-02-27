@@ -20,6 +20,8 @@ saft_innhold = ""  # global variabel, teksten fra saft-fila
 saft = pd.DataFrame()  # global variabel
 omsetning = pd.DataFrame() # global variabel
 orgnr: str = ""  #
+år: int = 0
+måned: int = 0
 
 def hent_saft_innhold() -> io.StringIO:
     if saft_innhold == "":
@@ -80,4 +82,28 @@ def oppsett_for_lesing_av_lokal_fil():
     e.addEventListener("change", file_event, False)
 
 
+def prosesser_år(x):
+    global år
+    år = document.getElementById('aar_velger').valueAsNumber
+
+
+def prosesser_måned(x):
+    global måned
+    måned = document.getElementById('maaned_velger').valueAsNumber
+    
+
+def oppsett_for_å_oppdage_valgt_måned_og_år():
+    valgt_år = create_proxy(prosesser_år)
+    valgt_måned = create_proxy(prosesser_måned)
+
+    e_år = document.getElementById("aar_velger")
+    e_måned = document.getElementById("maaned_velger")
+
+    e_år.addEventListener("change", valgt_år, False)
+    e_måned.addEventListener("change", valgt_måned, False)
+    
+
+
+
 oppsett_for_lesing_av_lokal_fil()
+oppsett_for_å_oppdage_valgt_måned_og_år()
