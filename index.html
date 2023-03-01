@@ -12,7 +12,7 @@
     </head>
     <body>
         <py-config>
-        packages = ["pandas"]  
+        packages = ["pandas", "lxml"]  
 
         [[fetch]]
         #from = "static/python/"
@@ -78,7 +78,7 @@
     <py-repl class="hidden">
     # Bruk vedlagte eksempelfil (hentet fra Skatteetatens Github)
     url = ("kopi_av_eksempelfil_888888888_20180228235959_fra_Skatteetatens_github.xml")
-    saft, orgnr = saft2dataframe(open_url(url))
+    saft, orgnr = gle2df(open_url(url))
     </py-repl>
 
     </article>
@@ -108,33 +108,31 @@
     <h1>Steg 3: Kjør analysen og verifiser resultatet</h1>
     <p>Klikk knappen nedenfor for å finne omsetning for perioden du spesifiserte i forrige steg.</p>
     <py-script>
-      def finn_omsetning(år: int, måned: int) -> str:
+
+    def finn_omsetning(år: int, måned: int) -> str:
         fra = f'{år}-{måned}-01'
         til = f'{år}-{måned + 1}-01'  # funker ikke hvis måned er 12 ...
-        global omsetning, orgnr
+        global omsetning
+        global orgnr
         omsetning = {
-            'Orgnr': orgnr,
             'år': år,
             'måned': måned,
         }
         omsetning.update(dict(saft.loc[
               (    # filtering transactions:
-                  saft['Transaction.TransactionDate'] >= fra)     
-                  & (saft['Transaction.TransactionDate'] < til)   
-                  & (saft['Line.AccountID'] >= 3000)          
-                  & (saft['Line.AccountID'] < 4000)] \
+                  saft['TransactionDate'] >= fra)     
+                  & (saft['TransactionDate'] < til)   
+                  & (saft['AccountID'] >= 3000)          
+                  & (saft['AccountID'] < 4000)] \
                   [[  
-                  'Line.DebitAmount.Amount',  # selecting the amount-columns
-                  'Line.TaxAmount.Amount',
-                  'Line.CreditAmount.Amount',]].sum()))
+                  'DebitAmount',  # selecting the amount-columns
+                  'CreditAmount',]].sum()))
         
         display(f'''Orgnr: {orgnr} |
               År: {år} |
               Måned: {måned} |
-              Debit: kr {omsetning['Line.DebitAmount.Amount']} | 
-              Skatt: kr{omsetning['Line.TaxAmount.Amount']} | 
-              Kredit: kr {omsetning[ 'Line.CreditAmount.Amount']}''',
-            target="resultat_finn_omsetning")
+              Debit: {omsetning['DebitAmount']} | 
+              Kredit: {omsetning[ 'CreditAmount']}''', target="resultat_finn_omsetning")
         
         Element('a4').remove_class('hidden')
 

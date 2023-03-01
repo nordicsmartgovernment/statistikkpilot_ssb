@@ -10,7 +10,7 @@ from request import request  # request-funksjonen fra pyscript, siden 'requests'
 from pyscript import Element
 
 # egne moduler
-from saft2dataframe import saft2dataframe
+from saft2dataframe import gle2df
         
   
 # Koden for å lese fil er hentet fra her:
@@ -41,7 +41,7 @@ def read_complete(event) -> pd.DataFrame:
 #    print(f'Har oppdatert saft_innhold: {saft_innhold[:100]}')
 
 
-    saft, orgnr = saft2dataframe(hent_saft_innhold())
+    saft, orgnr = gle2df(hent_saft_innhold())
 #    print(f'''har oppdatert saft dataframe, med innholdet i saft-fila som begynner med {saft_innhold[:100]}
 #
 #          Variabelen saft har følgende kolonner: {saft.columns}''')
