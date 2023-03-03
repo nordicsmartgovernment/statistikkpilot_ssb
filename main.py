@@ -35,12 +35,16 @@ def hent_saft_innhold() -> io.StringIO:
 
 
 def oppdater_månedsvelger(år: int, min_måned: int, maks_måned: int) -> None:
-    '''Endrer månedsvelgeren basert på hvilke data som finnes i SAF-T-filen,
-    *** Currently not working ... ***'''
+    '''Endrer månedsvelgeren basert på hvilke data som finnes i SAF-T-filen.'''
     el = Element('a2')
-    el.clear()
-    html = el.innerHtml
-
+    el.element.innerHTML = f'''
+    <h1>Steg 2: Velg rapporteringsperiode</h1>
+    <p>År: {år}</p>
+    <p>Velg måneden det skal rapporteres for:</p>
+    <label for="maaned_velger">Velg måned:</label>
+    <input type="number" id="maaned_velger" name="maaned_velger"
+       min="{min_måned}" max="{maks_måned}">
+'''
 
 
 def read_complete(event) -> pd.DataFrame:
@@ -54,11 +58,11 @@ def read_complete(event) -> pd.DataFrame:
     saft, orgnr = gle2df(hent_saft_innhold())
 
     # del 2 er å forberede velger for rapporteringsperiode
-    if len(år := saft['PeriodYear'].unique()) != 1:
+    if len(år_liste := saft['PeriodYear'].unique()) != 1:
         raise()
     min_måned = saft['Period'].min()
     maks_måned = saft['Period'].max()
-    oppdater_månedsvelger(år, min_måned, maks_måned)
+    oppdater_månedsvelger(år_liste[0], min_måned, maks_måned)
 
     # del 3 er å informere brukeren og åpne neste steg
     el = Element('resultat_a1')
@@ -96,28 +100,23 @@ def oppsett_for_lesing_av_lokal_fil():
     e.addEventListener("change", file_event, False)
 
 
-def prosesser_år(x):
-    global år
-    år = document.getElementById('aar_velger').valueAsNumber
-
-
 def prosesser_måned(x):
     global måned
     måned = document.getElementById('maaned_velger').valueAsNumber
+    Element('a3').add_class('visible')
+    Element('a3').remove_class('hidden')
+
     
 
-def oppsett_for_å_oppdage_valgt_måned_og_år():
-    valgt_år = create_proxy(prosesser_år)
+def oppsett_for_å_oppdage_valgt_måned():
     valgt_måned = create_proxy(prosesser_måned)
 
-    e_år = document.getElementById("aar_velger")
     e_måned = document.getElementById("maaned_velger")
 
-    e_år.addEventListener("change", valgt_år, False)
     e_måned.addEventListener("change", valgt_måned, False)
     
 
 
 
 oppsett_for_lesing_av_lokal_fil()
-oppsett_for_å_oppdage_valgt_måned_og_år()
+oppsett_for_å_oppdage_valgt_måned()
