@@ -22,6 +22,8 @@ omsetning = pd.DataFrame() # global variabel
 orgnr: str = ""  #
 år: int = 0
 måned: int = 0
+min_måned: int = 0
+maks_måned: int = 0
 
 def hent_saft_innhold() -> io.StringIO:
     if saft_innhold == "":
@@ -32,21 +34,33 @@ def hent_saft_innhold() -> io.StringIO:
         return io.StringIO(saft_innhold)
 
 
+def oppdater_månedsvelger(år: int, min_måned: int, maks_måned: int) -> None:
+    '''Endrer månedsvelgeren basert på hvilke data som finnes i SAF-T-filen,
+    *** Currently not working ... ***'''
+    el = Element('a2')
+    el.clear()
+    html = el.innerHtml
+
+
+
 def read_complete(event) -> pd.DataFrame:
 # event is ProgressEvent
 
+    # del 1 er å lese fila og transformere til pandas df
     content = document.getElementById("content")
-    global saft_innhold, saft, orgnr
+    global saft_innhold, saft, orgnr, år, min_måned, maks_måned
     saft_innhold = event.target.result
-#    print(f'Har oppdatert saft_innhold: {saft_innhold[:100]}')
-
 
     saft, orgnr = gle2df(hent_saft_innhold())
-#    print(f'''har oppdatert saft dataframe, med innholdet i saft-fila som begynner med {saft_innhold[:100]}
-#
-#          Variabelen saft har følgende kolonner: {saft.columns}''')
 
-    #document.getElementById('a2').style.display = 'block'  >> erstattet med pyscript-funksjonaliteten under, med element
+    # del 2 er å forberede velger for rapporteringsperiode
+    if len(år := saft['PeriodYear'].unique()) != 1:
+        raise()
+    min_måned = saft['Period'].min()
+    maks_måned = saft['Period'].max()
+    oppdater_månedsvelger(år, min_måned, maks_måned)
+
+    # del 3 er å informere brukeren og åpne neste steg
     el = Element('resultat_a1')
     el.write('Filen er lest, gå til neste steg')
 
