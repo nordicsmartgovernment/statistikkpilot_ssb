@@ -25,6 +25,20 @@ måned: int = 0
 min_måned: int = 0
 maks_måned: int = 0
 
+MÅNEDER = {'Januar': 1,
+ 'Februar': 2,
+ 'Mars': 3,
+ 'April': 4,
+ 'Mai': 5,
+ 'Juni': 6,
+ 'Juli': 7,
+ 'August': 8,
+ 'September': 9,
+ 'Oktober': 10,
+ 'November': 11,
+ 'Desember': 12}
+
+
 def hent_saft_innhold() -> io.StringIO:
     if saft_innhold == "":
         print('Du må først velge en lokal fil')
@@ -33,6 +47,18 @@ def hent_saft_innhold() -> io.StringIO:
 #        print(f'Her er saft_innhold: {saft_innhold[:100]}')
         return io.StringIO(saft_innhold)
 
+def lag_månedsalternativer(min_måned: int, maks_måned: int) -> str:
+    '''returnerer en liste med de aktuelle månedene som brukeren kan velge
+    TODO: Bytte fra tall til månedsnavn'''
+    global MÅNEDER
+    åpning = '<datalist id="måneder">\n'
+    avslutning = '</datalist>'
+
+    måneder_liste = ''
+    for i in range(maks_måned)[min_måned-1:]:
+         måneder_liste += f'<option value="{list(MÅNEDER.keys())[i]}"/>\n'
+    
+    return åpning + måneder_liste + avslutning
 
 def oppdater_månedsvelger(år: int, min_måned: int, maks_måned: int) -> None:
     '''Endrer månedsvelgeren basert på hvilke data som finnes i SAF-T-filen.'''
@@ -42,8 +68,10 @@ def oppdater_månedsvelger(år: int, min_måned: int, maks_måned: int) -> None:
     <p>År: {år}</p>
     <p>Velg måneden det skal rapporteres for:</p>
     <label for="maaned_velger">Velg måned:</label>
-    <input type="number" id="maaned_velger" name="maaned_velger"
-       min="{min_måned}" max="{maks_måned}">
+    <input type="text" id="maaned_velger" name="maaned_velger" required="true"
+       list="måneder">
+    
+    {lag_månedsalternativer(min_måned, maks_måned)}
 '''
     
 
@@ -106,8 +134,8 @@ def oppsett_for_lesing_av_lokal_fil():
 
 
 def prosesser_måned(x):
-    global måned
-    måned = document.getElementById('maaned_velger').valueAsNumber
+    global måned, MÅNEDER
+    måned = MÅNEDER[document.getElementById('maaned_velger').value]
     Element('a3').add_class('visible')
     Element('a3').remove_class('hidden')
     
