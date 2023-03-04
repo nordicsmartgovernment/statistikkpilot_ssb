@@ -45,6 +45,7 @@ def oppdater_månedsvelger(år: int, min_måned: int, maks_måned: int) -> None:
     <input type="number" id="maaned_velger" name="maaned_velger"
        min="{min_måned}" max="{maks_måned}">
 '''
+    
 
 
 def read_complete(event) -> pd.DataFrame:
@@ -60,15 +61,19 @@ def read_complete(event) -> pd.DataFrame:
     # del 2 er å forberede velger for rapporteringsperiode
     if len(år_liste := saft['PeriodYear'].unique()) != 1:
         raise()
+    år = år_liste[0]
     min_måned = saft['Period'].min()
     maks_måned = saft['Period'].max()
-    oppdater_månedsvelger(år_liste[0], min_måned, maks_måned)
+    oppdater_månedsvelger(år, min_måned, maks_måned)
+    #gjentar oppsettet for å oppdage endringer i måned:
+    oppsett_for_å_oppdage_valgt_måned()
 
     # del 3 er å informere brukeren og åpne neste steg
     el = Element('resultat_a1')
     el.write('Filen er lest, gå til neste steg')
 
     el = Element('a2')
+    el.add_class('visible')
     el.remove_class('hidden')
 
 
@@ -105,17 +110,12 @@ def prosesser_måned(x):
     måned = document.getElementById('maaned_velger').valueAsNumber
     Element('a3').add_class('visible')
     Element('a3').remove_class('hidden')
-
     
 
 def oppsett_for_å_oppdage_valgt_måned():
     valgt_måned = create_proxy(prosesser_måned)
-
     e_måned = document.getElementById("maaned_velger")
-
     e_måned.addEventListener("change", valgt_måned, False)
-    
-
 
 
 oppsett_for_lesing_av_lokal_fil()
