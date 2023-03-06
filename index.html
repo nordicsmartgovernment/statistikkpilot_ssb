@@ -37,7 +37,9 @@
     <a href="https://www.ssb.no/varehandel-og-tjenesteyting/varehandel/statistikk/varehandelsindeksen">varehandelsindeksen</a>.
     Istedenfor å finne de relevante omsetningstallene manuelt, inneholder denne siden kode som kan hente de relevante tallene
     fra en oppdatert SAF-T-fil. Følg instruksjonene under.</p>
-    <p style="font-size: small">Du kan også skru på et eget Python-vindu for å kjøre kode du skriver selv:</p>
+    <p style="font-size: small">Du kan også skru på en "REPL" (Python-vindu for å kjøre kode):
+        <button id="display_debug" py-onClick="display_debug()">Vis REPL</button>  <button id="skjul_debug" py-onClick="skjul_debug()">Skjul REPL</button>
+    </p>
     <py-script>
 
     def display_debug():
@@ -56,8 +58,6 @@
         el.clear()
 
     </py-script>
-    <button id="display_debug" py-onClick="display_debug()">Vis Python-vindu</button>  <button id="skjul_debug" py-onClick="skjul_debug()">Skjul Python-vindu</button>
-
     <div id="debug_respons"></div>
     </article>
 
@@ -66,9 +66,8 @@
     <h1>Steg 1: Velg SAF-T-fil</h1>
     <p>Eksporter en SAF-T-fil fra regnskapssystemet. Bokføringen må være oppdatert for perioden det skal rapporteres for.</p>
     <p><strong>Merk at filen <em>ikke</em> blir sendt/overført til noen andre.</strong>
-    Du kan verifisere dette selv ved å skru på flymodus/trekke ut nettverkskabelen, før du velger en fil. Analysen av SAF-T-filen vil fungere ettersom den relevante koden
-    allerede er lastet ned.</p>
-    <p style="font-size: small">Bruk <a href="https://raw.githubusercontent.com/Skatteetaten/saf-t/master/Example%20Files/ExampleFile%20SAF-T%20Financial_888888888_20180228235959.xml">
+    <p style="font-size: small">Du kan verifisere dette selv ved å skru på flymodus/trekke ut nettverkskabelen, før du velger en fil. Analysen av SAF-T-filen vil fungere ettersom den relevante koden
+    allerede er lastet ned. Bruk <a href="https://raw.githubusercontent.com/Skatteetaten/saf-t/master/Example%20Files/ExampleFile%20SAF-T%20Financial_888888888_20180228235959.xml">
     denne filen</a> hvis du ikke har en SAF-T fil og vil teste funksjonene på denne siden. Merk at testfilen kun inneholder data for 2017.</p>
     <label for="saftfil">Velg fil:</label>
     <input type="file" id="saftfil" name="saftfil"/>
