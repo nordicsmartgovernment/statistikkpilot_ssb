@@ -4,7 +4,7 @@ import json
 
 import pandas as pd
 from js import FileReader, document
-from pyodide import create_proxy
+from pyodide.ffi import create_proxy
 from pyodide.http import open_url
 from request import request  # request-funksjonen fra pyscript, siden 'requests' mangler
 from pyscript import Element
