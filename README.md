@@ -8,6 +8,34 @@ Det nordiske samarbeidsprosjektet [Nordic Smart Government and Business](https:/
 ## SAF-T og potensialet for forenkling
 Bokføringsloven stiller krav om å kunne levere bokføringsdata på et standardisert, elektronisk format. Som resultat av det kravet kan alle digitale bokføringssytem generere en SAF-T-fil med detaljerte data fra bokføringssystemet. Statistisk sentralbyrå (SSB) har analysert SAF-T og konkludert med at svært mye av den rapporteringen bedrifter må gjøre til SSB, er spørsmål etter informasjon som enten finnes i eller kan utledes av dataene i en SAF-T-fil. Forutsetningen er at bokføringen er korrekt og oppdatert for den aktuelle tidsperioden.
 
+### Hva er dagens arbeidsflyt?
+I arbeidet med piloten tar vi utgangspunkt i følgende beskrivelse av _dagens_ situasjon for rapportering der det spørres etter opplysninger som bygger på bokføringen:
+
+1. Motta krav/forespørsel om rapportering, f.eks. spørreundersøkelse fra SSB i Altinn
+2. Åpne skjemaet, f.eks. logg inn og velg skjemaet i Altinn
+3. Fullfør bokføringen for den aktuelle perioden, hvis det ikke allerede er gjort
+4. Bruk bokføringssystemets funksjonalitet for å finne og beregne de relevante tallene, eventuelt via hjelpeverktøy som Excel
+5. Gjør eventuelt om summen om til hele 1.000, eller lignende krav
+6. Legg inn tallet i skjemaet og send inn
+
+NB! Dette gjelder for de rapporteringene der det _ikke_ er bygget inn egen funksjonalitet i bokføringssystemet for å rapportere. Typiske rapporteringer som det er bygget funksjonalitet for er MVA-oppgaven, årsregnskap og næringsoppgaven.
+
+### Hvordan kan rapporteringen forenkles?
+
+I denne piloten utforsker vi følgende forenklinger:
+
+* Trinn 1: Brukeren skal slippe å "finne og beregne de relevante tallene" (pkt 4) og å gjøre om til riktig tall format-krav (pkt 5)
+    * Isteden skal de som ber om rapporten, samtidig levere kode/logikk som automatisk gjør denne jobben når den gis tilgang til bokføringsdata i SAF-T-format 
+* Trinn 2: Brukeren skal slippe å fylle ut skjemaet og sende inn (pkt 6)
+    * Isteden skal det være en i koden/logikken nevnt over som gjør at de relevante tallene kan overføres direkte til mottakeren, eller for å forhåndsutfylle et web-skjema
+* Trinn 3: Brukeren skal slippe å hente ut SAF-T-filen for den relevante perioden manuelt
+    * Istedenfor manuell eksport av SAF-T-filen fra bokføringssystemet, og deretter den manuelle prosessen med å velge den nylig eksporterte filen, skal det finnes mekanisme for å løse dette med et fåtall manuelle steg
+* Trinn 4: Brukeren skal slippe å forholde seg til rapporteringskravet
+    * Istedenfor å bli involvert i rapporteringen, kan brukeren få informasjon om at rapportering vil bli/er blitt utført. Dette kan for eksempel være under forutsetning av at brukeren på et tidligere tidspunkt har forhåndsgodkjent spesifikke rapporteringer
+
+Trinn 2 og trinn 3 kan jobbes med uavhengig av hverandre, og kan eventuelt løses i omvendt rekkefølge.
+
+
 ### Hvorfor ikke bare overføre hele SAF-T-filen til SSB
 For SSB kan det være aktuelt å kreve at bedrifter som er pålagt rapportering, sender dem SAF-T-filen, slik at SSB dermed kan trekke ut de relevante tallene selv. Dette kan trolig forenkle prosessen med å rapportere til SSB. Men det er også ulemper med en slik løsning. De to viktigste er kanskje at bedriftene vil måtte begynne å gi fra seg mye mer detaljert informasjon om hvem som kjøper og selger hva og til hvilke priser enn de gjør idag, og at en slik tilnærming bare vil fungere for SSB, som har lovhjemmel til å be om informasjon fra bedrifter.
 
