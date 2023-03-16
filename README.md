@@ -11,12 +11,12 @@ Bokføringsloven stiller krav om å kunne levere bokføringsdata på et standard
 ### Hva er dagens arbeidsflyt?
 I arbeidet med piloten tar vi utgangspunkt i følgende beskrivelse av _dagens_ situasjon for rapportering der det spørres etter opplysninger som bygger på bokføringen:
 
-1. Motta krav/forespørsel om rapportering, f.eks. spørreundersøkelse fra SSB i Altinn
-2. Åpne skjemaet, f.eks. logg inn og velg skjemaet i Altinn
+1. Motta krav/forespørsel om rapportering, i vårt tilfelle en spørreundersøkelse fra SSB i Altinn
+2. Åpne skjemaet, i vårt tilfelle logg inn og velg skjemaet i Altinn
 3. Fullfør bokføringen for den aktuelle perioden, hvis det ikke allerede er gjort
 4. Bruk bokføringssystemets funksjonalitet for å finne og beregne de relevante tallene, eventuelt via hjelpeverktøy som Excel
-5. Gjør eventuelt om summen om til hele 1.000, eller lignende krav
-6. Legg inn tallet i skjemaet og send inn
+5. Tilpass tallene til eventuelle formatkrav, i vårt tilfelle gjøre om summen til hele 1.000
+6. Send inn tallene, i vårt tilfelle ved å fylle dem inn i Altinn-skjemaet og sende inn
 
 NB! Dette gjelder for de rapporteringene der det _ikke_ er bygget inn egen funksjonalitet i bokføringssystemet for å rapportere. Typiske rapporteringer som det er bygget funksjonalitet for er MVA-oppgaven, årsregnskap og næringsoppgaven.
 
