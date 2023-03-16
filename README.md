@@ -30,7 +30,7 @@ I denne piloten utforsker vi følgende forenklinger:
     * Isteden skal det være en i koden/logikken nevnt over som gjør at de relevante tallene kan overføres direkte til mottakeren, eller for å forhåndsutfylle et web-skjema
 * Trinn 3: Brukeren skal slippe å hente ut SAF-T-filen for den relevante perioden manuelt
     * Istedenfor manuell eksport av SAF-T-filen fra bokføringssystemet, og deretter den manuelle prosessen med å velge den nylig eksporterte filen, skal det finnes mekanisme for å løse dette med et fåtall manuelle steg
-* Trinn 4: Brukeren skal slippe å forholde seg til rapporteringskravet
+* Trinn 4: Brukeren skal slippe å forholde seg til rapporteringskravet (pkt 1 og 2)
     * Istedenfor å bli involvert i rapporteringen, kan brukeren få informasjon om at rapportering vil bli/er blitt utført. Dette kan for eksempel være under forutsetning av at brukeren på et tidligere tidspunkt har forhåndsgodkjent spesifikke rapporteringer
 
 Trinn 2 og trinn 3 kan jobbes med uavhengig av hverandre, og kan eventuelt løses i omvendt rekkefølge.
