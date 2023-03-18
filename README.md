@@ -5,6 +5,8 @@ _Dette er en pilot for å forenkle rapporteringen til SSB. Den dekker i første 
 ## Bakgrunn
 Det nordiske samarbeidsprosjektet [Nordic Smart Government and Business](https://nordicsmartgovernment.org/) ser på en rekke ulike måter å forenkle hverdagen til bedrifter i Norge. Et av områdene er [Open Accounting and Simplified Reporting](https://nordicsmartgovernment.org/open-accounting). Denne piloten er en del av dette arbeidet.
 
+For mer bakgrunn og kontekst, se [presentasjon for den norske referansegruppen for NSG&B](https://docs.google.com/presentation/d/168MWBtARKab83gbWb2__zAO3dYk9UIs_/edit#slide=id.g11554aad2fd_1_43) fra november 2022.
+
 ## SAF-T og potensialet for forenkling
 Bokføringsloven stiller krav om å kunne levere bokføringsdata på et standardisert, elektronisk format. Som resultat av det kravet kan alle digitale bokføringssytem generere en SAF-T-fil med detaljerte data fra bokføringssystemet. Statistisk sentralbyrå (SSB) har analysert SAF-T og konkludert med at svært mye av den rapporteringen bedrifter må gjøre til SSB, er spørsmål etter informasjon som enten finnes i eller kan utledes av dataene i en SAF-T-fil. Forutsetningen er at bokføringen er korrekt og oppdatert for den aktuelle tidsperioden.
 
