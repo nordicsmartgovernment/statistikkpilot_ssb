@@ -121,16 +121,16 @@ def gle2df(file: str) -> Tuple[pd.DataFrame, str]:
 #    'Line.DebitAmount': str,
     'DebitAmount': float,
 #    'Line.TaxInformation': str,
-    'TaxType': 'category',
-    'TaxCode': 'category',
-    'TaxPercentage': float,
-    'TaxBase': float,
-    'TaxAmount': float, # Her skulle det kommet en "Amount" rett etterpå ...
+#    'TaxType': 'category',
+#    'TaxCode': 'category',
+#    'TaxPercentage': float,
+#    'TaxBase': float,
+#    'TaxAmount': float, # Her skulle det kommet en "Amount" rett etterpå ...
 #    'Line.ReferenceNumber': str,
 #    'Line.SupplierID': str,
     'CreditAmount': float,
 #    'Line.CustomerID': str,
-    }, errors='ignore')
+    }) #, errors='ignore')  # might be a bit risky to ignore all errors ...
 
     return (lines, orgnr)
 
