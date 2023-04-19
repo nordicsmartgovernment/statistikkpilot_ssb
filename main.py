@@ -78,6 +78,9 @@ def oppdater_månedsvelger(år: int, min_måned: int, maks_måned: int) -> None:
 
 def read_complete(event) -> pd.DataFrame:
 # event is ProgressEvent
+    # del 0 er å advare om at lesingen kan ta litt tid ...
+    el = Element('resultat_a1')
+    el.write('Merk at lesingen av filen kan ta litt tid ...')
 
     # del 1 er å lese fila og transformere til pandas df
     content = document.getElementById("content")
@@ -107,6 +110,9 @@ def read_complete(event) -> pd.DataFrame:
 
 async def process_file(x):
     fileList = document.getElementById('saftfil').files
+
+    el = Element('resultat_a1')
+    el.write('Merk at lesingen av filen kan ta litt tid ...')
 
     for f in fileList:
         # reader is a pyodide.JsProxy

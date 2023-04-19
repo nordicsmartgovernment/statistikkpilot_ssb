@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 
+
 def find_organisation_number(soup: BeautifulSoup) -> str:
     '''Helper function that receives a "soup" from parsing the SAF-T, and extracts
     the company's registration number (as a string)'''
@@ -57,17 +58,42 @@ def accounts2df(path: Path) -> Tuple[pd.DataFrame, str]:
 
 
 def gle2df(file: str) -> Tuple[pd.DataFrame, str]:
-    '''Reads a SAF-T file and extracts all the General Ledger Entries from the elements
+    '''Reads a SAF-T file (either name/path of a file or the xml-content) and extracts
+    all the General Ledger Entries from the elements
     <GeneralLedgerEntries>, and adds them to a pandas Dataframe. The return value is a 
-    tuple that includes the dataframe, and a string that hodls the organisation number
+    tuple that includes the dataframe, and a string that holds the organisation number
     that identifies the company. The latter is taken from the element
     Header>Company>RegistrationNumber'''
 
-    # with open(path, mode='r') as file:
-    soup = BeautifulSoup(file, "xml") # switched from lxml to the standard libs parser. See more: https://beautiful-soup-4.readthedocs.io/en/latest/#installing-a-parser    
+    soup = BeautifulSoup(file, "xml")
 
+    # First, extract orgnr from the file
     orgnr = find_organisation_number(soup)
 
+    # Second, get the mapping between AccountID and StandardAccountID
+    MasterFiles = soup.find_all('MasterFiles')
+
+    accountsdict = {}
+
+    n = 0
+    for f in MasterFiles:
+        for account in f.find_all('Account'):
+            n += 1
+            input = {}
+            for child in account.children:
+                if child != '\n' and child.is_empty_element == False:
+                    input[str(child.name)] = child.contents[0]
+            accountsdict[str(n)] = input
+
+    accounts = pd.DataFrame.from_dict(accountsdict, orient = 'index')
+
+    # Check that AccountID is unique, and set it as index
+    if not accounts['AccountID'].is_unique:
+        raise ValueError("AccountID is not unique in MasterFiles")
+    
+    accounts.set_index('AccountID', inplace=True)
+
+    # Third, get the General Ledger Entries, and map them to the StandardAccountID
     GLE = soup.find_all('GeneralLedgerEntries')
 
     linedict = {}
@@ -91,10 +117,16 @@ def gle2df(file: str) -> Tuple[pd.DataFrame, str]:
                         elif child.name == 'TaxInformation':
                             for c in child.children:
                                 inputline[c.name] = c.string
+                        elif child.name == 'AccountID':
+                            inputline[child.name] = child.string
+                            inputline['StandardAccountID'] = accounts.loc[child.string]['StandardAccountID']
                         else:
                             inputline[str(child.name)] = child.contents[0]
                 linedict[str(n)] = {key: str(value) for (key, value) in inputline.items()}
     lines = pd.DataFrame.from_dict(linedict, orient = 'index')
+
+    if not (lines['StandardAccountID'].str.match(r'^\d{4}').all() or lines['StandardAccountID'].str.match(r'^\d{2}').all()):
+        raise ValueError("StandardAccountID either missing for some transactions, or wrong format (should be 4 or 2 digits)")
 
     lines = lines.astype(dtype={
      # valg av datatype pr felt bør verifiseres av noen ...
@@ -103,13 +135,14 @@ def gle2df(file: str) -> Tuple[pd.DataFrame, str]:
     'Period': int,
     'PeriodYear': int,
     'TransactionDate': 'datetime64',
-    'TransactionType': 'category',
+#    'TransactionType': 'category',
 #    'Transaction.Description': str,
     'SystemEntryDate': 'datetime64',
     'GLPostingDate': 'datetime64',
 #    'Line.Line': str,
 #    'Line.RecordID': str,
-    'AccountID': int,
+    'AccountID': str,  # base="xs:string", <xs:maxLength value="70"/>, <xs:documentation>70 character text.</xs:documentation>
+    'StandardAccountID': str, # base="xs:string", <xs:maxLength value="70"/>, <xs:documentation>70 character text.</xs:documentation>
 #    'Line.Analysis': 'str',
 #    'Line.AnalysisType': 'category',
 #    'Line.AnalysisID': 'category',
@@ -130,7 +163,7 @@ def gle2df(file: str) -> Tuple[pd.DataFrame, str]:
 #    'Line.SupplierID': str,
     'CreditAmount': float,
 #    'Line.CustomerID': str,
-    }) #, errors='ignore')  # might be a bit risky to ignore all errors ...
+    })
 
     return (lines, orgnr)
 
