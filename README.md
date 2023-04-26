@@ -2,6 +2,10 @@
 
 _Dette er en pilot for å forenkle rapporteringen til SSB. Den dekker i første omgang rapportering til [varehandelsindeksen](https://www.ssb.no/varehandel-og-tjenesteyting/varehandel/statistikk/varehandelsindeksen). Istedenfor å finne de relevante omsetningstallene manuelt, inneholder denne siden kode som kan hente de relevante tallene fra en oppdatert SAF-T-fil._
 
+## Status
+I april 2023 fikk vi bekreftet fra pilotdeltager Amesto at piloten lyktes i å hente korrekte tall fra SAF-T-fil for en av deres kunder,
+ref "Trinn 1" i arbeidsflytbeskrivelsen nedenfor.
+
 ## Bakgrunn
 Det nordiske samarbeidsprosjektet [Nordic Smart Government and Business](https://nordicsmartgovernment.org/) ser på en rekke ulike måter å forenkle hverdagen til bedrifter i Norge. Et av områdene er [Open Accounting and Simplified Reporting](https://nordicsmartgovernment.org/open-accounting). Denne piloten er en del av dette arbeidet.
 
@@ -29,14 +33,14 @@ I denne piloten utforsker vi følgende forenklinger:
 * Trinn 1: Brukeren skal slippe å "finne og beregne de relevante tallene" (pkt 4) og å gjøre om til riktig tall format-krav (pkt 5)
     * Isteden skal de som ber om rapporten, samtidig levere kode/logikk som automatisk gjør denne jobben når den gis tilgang til bokføringsdata i SAF-T-format 
 * Trinn 2: Brukeren skal slippe å fylle ut skjemaet og sende inn (pkt 6)
-    * Isteden skal det være en i koden/logikken nevnt over som gjør at de relevante tallene kan overføres direkte til mottakeren, eller for å forhåndsutfylle et web-skjema
+    * Isteden skal det være noe i koden/logikken nevnt over som gjør at de relevante tallene kan overføres direkte til mottakeren, eller  forhåndsutfylle et web-skjema
 * Trinn 3: Brukeren skal slippe å hente ut SAF-T-filen for den relevante perioden manuelt
     * Istedenfor manuell eksport av SAF-T-filen fra bokføringssystemet, og deretter den manuelle prosessen med å velge den nylig eksporterte filen, skal det finnes mekanisme for å løse dette med et fåtall manuelle steg
 * Trinn 4: Brukeren skal slippe å forholde seg til rapporteringskravet (pkt 1 og 2)
     * Istedenfor å bli involvert i rapporteringen, kan brukeren få informasjon om at rapportering vil bli/er blitt utført. Dette kan for eksempel være under forutsetning av at brukeren på et tidligere tidspunkt har forhåndsgodkjent spesifikke rapporteringer
 
-Trinn 2 og trinn 3 kan jobbes med uavhengig av hverandre, og kan eventuelt løses i omvendt rekkefølge.
 
+Trinn 2 og trinn 3 kan jobbes med uavhengig av hverandre, og kan eventuelt løses i omvendt rekkefølge.
 
 ### Hvorfor ikke bare overføre hele SAF-T-filen til SSB
 For SSB kan det være aktuelt å kreve at bedrifter som er pålagt rapportering, sender dem SAF-T-filen, slik at SSB dermed kan trekke ut de relevante tallene selv. Dette kan trolig forenkle prosessen med å rapportere til SSB. Men det er også ulemper med en slik løsning. De to viktigste er kanskje at bedriftene vil måtte begynne å gi fra seg mye mer detaljert informasjon om hvem som kjøper og selger hva og til hvilke priser enn de gjør idag, og at en slik tilnærming bare vil fungere for SSB, som har lovhjemmel til å be om informasjon fra bedrifter.
