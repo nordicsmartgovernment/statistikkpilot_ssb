@@ -121,6 +121,7 @@
         global omsetning
         global orgnr
         omsetning = {
+            'orgnr': orgnr,
             'år': int(år),
             'måned': måned,
         }
@@ -151,21 +152,22 @@
 
     <article id="a4" class="hidden">
     <h1>Steg 4: Send inn tallene til SSB</h1>
-    <p>Klikk for å sende tallene til (for tiden ...) et dummy-API hos jsonplaceholder.typicode.com.</p>
+    <p>Klikk for å sende tallene til (for tiden ...) et midlertidig API, laget for denne piloten,
+    på Google Cloud.</p>
     <py-script>
 
-    async def api_kall(data, baseurl):
+    async def api_kall(data, baseurl, orid):
         headers = {"Content-type": "application/json"}
-        new_post = await request(f"{baseurl}/posts", body=data, method="POST", headers=headers)
-        display(f"""Har POSTet følgende json:
+        new_post = await request(f"{baseurl}/{orid}", body=data, method="POST", headers=headers)
+        display(f"""Har POSTet følgende data:
             {await new_post.json()}
             Statuskode: {new_post.status}. (201 betyr at det var vellykket!)""",
             target='resultat_send_inn_tallene')
   
     def send_inn():
-        baseurl = "https://jsonplaceholder.typicode.com"
+        baseurl = "https://oa-reporting-api.ew.r.appspot.com/orid"
         data = json.dumps(omsetning)
-        asyncio.ensure_future(api_kall(data, baseurl))
+        asyncio.ensure_future(api_kall(data, baseurl, "RA-0187"))
 
     </py-script>
     <button id="send_inn_tallene" py-onClick="send_inn()">Send inn</button>    
