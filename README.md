@@ -8,6 +8,8 @@ I arbeidet jobber vi med å forenkle rapporteringsprosessen i følgende trinn:
 * Trinn 3: Brukeren skal slippe å hente ut SAF-T-filen for den relevante perioden manuelt
 * Trinn 4: Brukeren skal slippe å forholde seg til rapporteringskravet
 
+Tilnærmingen i piloten kan sees på som et forsøk på "[Rules as Code](https://oecd-opsi.org/publications/cracking-the-code/)"; istedenfor at SSB stiller krav i prosa og skjema med hjemmel i statistikkloven, tilbyr de kildekode som oppfyller kravet.
+
 For mer om hvert trinn, se avsnittet [Hvordan kan rapporteringen forenkles](#hvordan-kan-rapporteringen-forenkles), nedenfor.
 
 
