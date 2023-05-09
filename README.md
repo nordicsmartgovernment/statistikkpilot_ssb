@@ -103,10 +103,10 @@ Siden det har lav terskel for å testes ut, er dette verktøyene som er valgt fo
 
 ## Om varehandelsindeksen og begrepet "omsetning"
 
-Populasjonen som leverer tall er beskrevet som følger:
+Populasjonen som leverer tall til SSBs varehandelsindeks er beskrevet som følger:
 > Populasjonen er alle virksomheter innen næringshovedområde G, som består av næring 45 handel med og reparasjon av motorvogner, 46 agentur- og engroshandel, unntatt med motorvogner (ekskludert 46.1 agenturhandel) og 47 detaljhandel, unntatt med motorvogner (SN 2007: G)
 
-Innsending via skjema i Altinn for et utvalg på ca 3.000 virksomheter, som trekkes. De som blir trukket ut må sende inn tall innen 12. i hver måned i fire år før de rulleres ut.
+Rapporteringen foregår idag via innsending via skjema i Altinn for et utvalg på ca 3.000 virksomheter. De som blir trukket ut må sende inn tall innen 12. i hver måned i fire år før de rulleres ut. I tillegg er det ca 15.000 virksomheter i kjeder som rapporterer direkte til SSB maskinelt.
 
 Varehandelsindeksen er standardisert på europeisk nivå, gjennom Eurostat. Eurostat mottar tall fra de nasjonale statistikkbyråene og publiserer oppdaterte tall for "[Retail Trade Volume Index](https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Retail_trade_volume_index_overview#Turnover_for_retail_and_wholesale_trade)".
 
@@ -120,6 +120,8 @@ Hentet fra [SSBs nettside om varehandelsindeksen](https://www.ssb.no/varehandel-
 I arbeidet med piloten er omsetning blitt presisert til å være transaksjoner bokført på kontoene 3000-3999 (firesifret) eller 30-39 (tosifret) i henhold til Norsk standard kontoplan.
 
 Når de bokførte transaksjonene er representert i SAF-T kan de ha beløp for hhv "CreditAmount" og "DebitAmount". Se eksempelet nedenfor hentet fra [vedlagte eksempelfil](kopi_av_eksempelfil_888888888_20180228235959_fra_Skatteetatens_github.xml).
+
+Transaksjonen nedenfor har tre linjer, der den første linjen er kontert på konto 3000, og CreditAmount 40.000,-. Den andre linjen er kontert på konto 1500 og DebitAmount 50.000,-. Den tredje linjen er kontert på konto 2700 og beskrevet som "Beregnet MVA", og CreditAmount 10.000,-.
 
 ```xml
 <n1:Transaction>
@@ -190,7 +192,7 @@ Når de bokførte transaksjonene er representert i SAF-T kan de ha beløp for hh
 
 For å få _omsetning_ for en måned filtreres først alle transaksjoner for en gitt måned. Måned er angitt pr transaksjon med elementet Period, som i eksempelet over er ```<n1:Period>01</n1:Period>```.
 
-Deretter filtreres alle transaksjonene etter konto, det vil si de som er kontert på kontoene 3000-3999 i standard kontoplan.
+Deretter filtreres alle transaksjonene etter konto, det vil si de som er kontert på kontoene 3000-3999 i standard kontoplan. Det vil si at i eksempelet over er det kun den første linjen som blir plukket ut.
 
 DebitAmount og CreditAmount summeres hver for seg for alle transaksjonene. Til slutt beregnes omsetning for perioden ved formelen -(DebitAmount - CreditAmount).
 
