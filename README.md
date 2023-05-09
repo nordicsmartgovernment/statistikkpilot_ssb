@@ -4,7 +4,7 @@ _Dette er en pilot for å forenkle rapporteringen til SSB. Den dekker i første 
 
 ## Status
 I april 2023 fikk vi bekreftet fra pilotdeltager Amesto at piloten lyktes i å hente korrekte tall fra SAF-T-fil for en av deres kunder,
-ref "Trinn 1" i arbeidsflytbeskrivelsen nedenfor. I mai er det lagt til et midlertidig API for å ta imot tallene dersom brukeren velger "Send inn". Det jobbes med mekanisme for å formidle disse videre til SSB, og avklare tilstrekkelig grad av sikkerhet for denne piloten.
+jfr trinn 1 i [hvordan kan rapporteringen forenkles](#hvordan-kan-rapporteringen-forenkles) nedenfor. I mai er det lagt til et midlertidig API for å ta imot tallene dersom brukeren velger "Send inn". Det jobbes med mekanisme for å formidle disse videre til SSB, og avklare tilstrekkelig grad av sikkerhet for denne piloten. Når disse endringene er på plass innebærer det en løsning på trinn 2.
 
 ## Bakgrunn
 Det nordiske samarbeidsprosjektet [Nordic Smart Government and Business](https://nordicsmartgovernment.org/) ser på en rekke ulike måter å forenkle hverdagen til bedrifter i Norge. Et av områdene er [Open Accounting and Simplified Reporting](https://nordicsmartgovernment.org/open-accounting). Denne piloten er en del av dette arbeidet.
