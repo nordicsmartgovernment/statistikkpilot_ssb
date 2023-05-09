@@ -1,10 +1,21 @@
 # Pilot: Rapportering til SSB basert på SAF-T
 
-_Dette er en pilot for å forenkle rapporteringen til SSB. Den dekker i første omgang rapportering til [varehandelsindeksen](https://www.ssb.no/varehandel-og-tjenesteyting/varehandel/statistikk/varehandelsindeksen). Istedenfor å finne de relevante omsetningstallene manuelt, inneholder denne siden kode som kan hente de relevante tallene fra en oppdatert SAF-T-fil._
+_Dette er en pilot for å forenkle rapporteringen til SSB. Den dekker i første omgang rapportering til [varehandelsindeksen](https://www.ssb.no/varehandel-og-tjenesteyting/varehandel/statistikk/varehandelsindeksen). Målet er å erstatte manuell prosess for å finne og rapportere inn omsetningstallene, med automatisering med utgangspunkt i oppdaterte bokføringsdata tilgjengeliggjort via en SAF-T-fil._
+
+I arbeidet jobber vi med å forenkle rapporteringsprosessen i følgende trinn:
+* Trinn 1: Brukeren skal slippe å "finne og beregne de relevante tallene"
+* Trinn 2: Brukeren skal slippe å fylle ut skjemaet og sende inn
+* Trinn 3: Brukeren skal slippe å hente ut SAF-T-filen for den relevante perioden manuelt
+* Trinn 4: Brukeren skal slippe å forholde seg til rapporteringskravet
+
+For mer om hvert trinn, se avsnittet [Hvordan kan rapporteringen forenkles](#hvordan-kan-rapporteringen-forenkles), nedenfor.
+
 
 ## Status
 I april 2023 fikk vi bekreftet fra pilotdeltager Amesto at piloten lyktes i å hente korrekte tall fra SAF-T-fil for en av deres kunder,
-jfr trinn 1 i [hvordan kan rapporteringen forenkles](#hvordan-kan-rapporteringen-forenkles) nedenfor. I mai er det lagt til et midlertidig API for å ta imot tallene dersom brukeren velger "Send inn". Det jobbes med mekanisme for å formidle disse videre til SSB, og avklare tilstrekkelig grad av sikkerhet for denne piloten. Når disse endringene er på plass innebærer det en løsning på trinn 2.
+jfr trinn 1.
+
+I mai er det lagt til et midlertidig API for å ta imot tallene dersom brukeren velger "Send inn". Det jobbes med mekanisme for å formidle disse videre til SSB, og avklare tilstrekkelig grad av sikkerhet for denne piloten. Når disse endringene er på plass innebærer det en løsning på trinn 2.
 
 ## Bakgrunn
 Det nordiske samarbeidsprosjektet [Nordic Smart Government and Business](https://nordicsmartgovernment.org/) ser på en rekke ulike måter å forenkle hverdagen til bedrifter i Norge. Et av områdene er [Open Accounting and Simplified Reporting](https://nordicsmartgovernment.org/open-accounting). Denne piloten er en del av dette arbeidet.
