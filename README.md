@@ -10,7 +10,7 @@ I arbeidet jobber vi med å forenkle rapporteringsprosessen i følgende trinn:
 
 Tilnærmingen i piloten kan sees på som et forsøk på "[Rules as Code](https://oecd-opsi.org/publications/cracking-the-code/)"; istedenfor at SSB stiller krav i prosa og skjema med hjemmel i statistikkloven, tilbyr de kildekode som oppfyller kravet.
 
-For mer om hvert trinn, se avsnittet [Hvordan kan rapporteringen forenkles](#hvordan-kan-rapporteringen-forenkles), nedenfor.
+For mer om hvert trinn, se avsnittet [Hvordan kan rapporteringen forenkles](#hvordan-kan-rapporteringen-forenkles), nedenfor. For mer om de valgte statistikken, se [Om varehandelsindeksen og begrepet omsetning](#om-varehandelsindeksen-og-begrepet-omsetning)
 
 
 ## Status
@@ -95,7 +95,106 @@ Det kan være interessant å se nærmere på [e-helse-standarden "Smart on FHIR"
 Det andre er overføring av omsetningstallene til mottakeren. Per nå er det laget et midlertidig API som kan ta imot tallene, og det jobbes med en men mekanisme for å overføre tallene videre til SSB. Her trengs det løsninger som kan håndtere autentisering og autorisering på tilstrekkelig nivå for å åpne opp i større skala.
 
 ## Teknologi
+Piloten har ikke som formål å verifisere et spesifikt teknologivalg. Valg av teknologi er gjort basert på et utvalg som gjør det mulig og relativt enkelt å demonstrere et konsept. Det er også valgt basert på tilgjengelige utviklingsressurser i piloten er kjent med.
+
 Selv om Python og Pandas er blant de mest kjente og brukte verktøyene for analyse av data, så er det tradisjonelt utfordrende å få et python-miljø opp å kjøre på en PC eller mobiltelefon. Men våren 2022 ble PyScript annonsert, og selv om dette er i en tidlig fase, fungerer det allerede som mekanisme for å kjøre Python i en nettleser, og samtidig kunne interagere med nettleseren for funksjoner som å åpne fil, og kjøre kode når f.eks. brukeren klikker på en knapp.
 
 Siden det har lav terskel for å testes ut, er dette verktøyene som er valgt for piloten. Det utelukker ikke at andre teknologivalg kan være aktuelle for fremtidige løsninger. Det viktige er at 1) koden må kjøres _hos brukeren_, og ikke være avhengig av at brukeren sender fra seg de detaljerte dataene, og 2) det må være teknologi som er utbredt, gratis/uten bindinger, som gjør at den kan tas i bruk av og inspiseres av mange.
+
+## Om varehandelsindeksen og begrepet "omsetning"
+
+Populasjonen som leverer tall er beskrevet som følger:
+> Populasjonen er alle virksomheter innen næringshovedområde G, som består av næring 45 handel med og reparasjon av motorvogner, 46 agentur- og engroshandel, unntatt med motorvogner (ekskludert 46.1 agenturhandel) og 47 detaljhandel, unntatt med motorvogner (SN 2007: G)
+
+Innsending via skjema i Altinn for et utvalg på ca 3.000 virksomheter, som trekkes. De som blir trukket ut må sende inn tall innen 12. i hver måned i fire år før de rulleres ut.
+
+Varehandelsindeksen er standardisert på europeisk nivå, gjennom Eurostat. Eurostat mottar tall fra de nasjonale statistikkbyråene og publiserer oppdaterte tall for "[Retail Trade Volume Index](https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Retail_trade_volume_index_overview#Turnover_for_retail_and_wholesale_trade)".
+
+### "Omsetning"
+Nøkkeltallet i SSBs varehandelsindeksen er _omsetning_. SSBs definisjon er som følger:
+
+> Omsetning: Salgsinntekter av varer og tjenester, omkostninger som transport og emballasje som blir fakturert kunden, samt leie- og provisjonsinntekter, royalties, lisensinntekter o. l. Merverdiavgift og finansinntekter er ikke inkludert.
+
+Hentet fra [SSBs nettside om varehandelsindeksen](https://www.ssb.no/varehandel-og-tjenesteyting/varehandel/statistikk/varehandelsindeksen).
+
+I arbeidet med piloten er omsetning blitt presisert til å være transaksjoner bokført på kontoene 3000-3999 (firesifret) eller 30-39 (tosifret) i henhold til Norsk standard kontoplan.
+
+Når de bokførte transaksjonene er representert i SAF-T kan de ha beløp for hhv "CreditAmount" og "DebitAmount". Se eksempelet nedenfor hentet fra [vedlagte eksempelfil](kopi_av_eksempelfil_888888888_20180228235959_fra_Skatteetatens_github.xml).
+
+```xml
+<n1:Transaction>
+    <n1:TransactionID>1006</n1:TransactionID>
+    <n1:Period>01</n1:Period>
+    <n1:PeriodYear>2017</n1:PeriodYear>
+    <n1:TransactionDate>2017-01-09</n1:TransactionDate>
+    <n1:TransactionType>Normal</n1:TransactionType>
+    <n1:Description>Salg av bamser og spinnere</n1:Description>
+    <n1:SystemEntryDate>2017-01-02</n1:SystemEntryDate>
+    <n1:GLPostingDate>2017-01-12</n1:GLPostingDate>
+    <n1:Line>
+        <n1:RecordID>1</n1:RecordID>
+        <n1:AccountID>3000</n1:AccountID>
+        <n1:Analysis>
+            <n1:AnalysisType>P</n1:AnalysisType>
+            <n1:AnalysisID>200</n1:AnalysisID>
+            <n1:AnalysisAmount>
+                <n1:Amount>20000</n1:Amount>
+            </n1:AnalysisAmount>
+        </n1:Analysis>
+        <n1:Analysis>
+            <n1:AnalysisType>P</n1:AnalysisType>
+            <n1:AnalysisID>202</n1:AnalysisID>
+            <n1:AnalysisAmount>
+                <n1:Amount>20000</n1:Amount>
+            </n1:AnalysisAmount>
+        </n1:Analysis>
+        <n1:ValueDate>2017-01-09</n1:ValueDate>
+        <n1:SourceDocumentID>1234</n1:SourceDocumentID>
+        <n1:Description>Salg av bamser og spinnere</n1:Description>
+        <n1:CreditAmount>
+            <n1:Amount>40000</n1:Amount>
+        </n1:CreditAmount>
+        <n1:TaxInformation>
+            <n1:TaxType>MVA</n1:TaxType>
+            <n1:TaxCode>2</n1:TaxCode>
+            <n1:TaxPercentage>25</n1:TaxPercentage>
+            <n1:TaxBase>40000</n1:TaxBase>
+            <n1:TaxAmount>
+                <n1:Amount>10000</n1:Amount>
+            </n1:TaxAmount>
+        </n1:TaxInformation>
+    </n1:Line>
+    <n1:Line>
+        <n1:RecordID>2</n1:RecordID>
+        <n1:AccountID>1500</n1:AccountID>
+        <n1:ValueDate>2017-01-09</n1:ValueDate>
+        <n1:SourceDocumentID>1234</n1:SourceDocumentID>
+        <n1:CustomerID>1000</n1:CustomerID>
+        <n1:Description>Salg av bamser og spinnere</n1:Description>
+        <n1:DebitAmount>
+            <n1:Amount>50000</n1:Amount>
+        </n1:DebitAmount>
+    </n1:Line>
+    <n1:Line>
+        <n1:RecordID>3</n1:RecordID>
+        <n1:AccountID>2700</n1:AccountID>
+        <n1:ValueDate>2017-01-09</n1:ValueDate>
+        <n1:SourceDocumentID>1234</n1:SourceDocumentID>
+        <n1:Description>Beregnet MVA</n1:Description>
+        <n1:CreditAmount>
+            <n1:Amount>10000</n1:Amount>
+        </n1:CreditAmount>
+    </n1:Line>
+</n1:Transaction>
+```
+
+For å få _omsetning_ for en måned filtreres først alle transaksjoner for en gitt måned. Måned er angitt pr transaksjon med elementet Period, som i eksempelet over er ```<n1:Period>01</n1:Period>```.
+
+Deretter filtreres alle transaksjonene etter konto, det vil si de som er kontert på kontoene 3000-3999 i standard kontoplan.
+
+DebitAmount og CreditAmount summeres hver for seg for alle transaksjonene. Til slutt beregnes omsetning for perioden ved formelen -(DebitAmount - CreditAmount).
+
+## Nærmere om overgangen fra bokføringsdata til rapportering i kode
+TODO: Legg inn referanser til koden som tar SAF-T-data til df, og filtrerer og beregner omsetning.
+
 
