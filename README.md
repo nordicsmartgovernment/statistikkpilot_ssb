@@ -294,6 +294,6 @@ Når den filtreringen er gjort velges de to kolonnene som angis i neste hakepara
 
 Til slutt kan omsetning beregnes:
 ```python
-abs(omsetning['DebitAmount'] - omsetning['CreditAmount'])
+-(omsetning['DebitAmount'] - omsetning['CreditAmount'])
 ```
 

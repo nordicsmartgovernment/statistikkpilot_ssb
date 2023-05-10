@@ -134,7 +134,7 @@
                 'DebitAmount',  # selecting the amount-columns
                 'CreditAmount',]].sum()))
 
-        omsetning.update({'omsetning': abs(omsetning['DebitAmount'] - omsetning['CreditAmount'])})
+        omsetning.update({'omsetning': -(omsetning['DebitAmount'] - omsetning['CreditAmount'])})
         
         display(f'''Orgnr: {orgnr} |
                 År: {år} |
