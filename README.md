@@ -19,6 +19,23 @@ jfr trinn 1.
 
 I mai er det lagt til et midlertidig API for å ta imot tallene dersom brukeren velger "Send inn". Det jobbes med mekanisme for å formidle disse videre til SSB, og avklare tilstrekkelig grad av sikkerhet for denne piloten. Når disse endringene er på plass innebærer det en løsning på trinn 2.
 
+## Innhold
+* [Bakgrunn](#bakgrunn)
+* [SAF-T og potensialet for forenkling](#saf-t-og-potensialet-for-forenkling)
+    * [Hva er dagens arbeidsflyt?](#hva-er-dagens-arbeidsflyt)
+    * [Hvordan kan rapporteringen forenkles?](#hvordan-kan-rapporteringen-forenkles)
+    * [Hvorfor ikke bare overføre hele SAF-T-filen til SSB?](#hvorfor-ikke-bare-overføre-hele-saf-t-filen-til-ssb)
+    * [Det grønne skiftet forsterker næringslivets etterspørsel etter rapportering](#det-grønne-skiftet-forsterker-næringslivets-etterspørsel-etter-rapportering)
+    * [Siste måneds omsetning - for SSB og huseiere](#siste-måneds-omsetning---for-ssb-og-huseiere)
+* [Hvordan virker piloten?](#hvordan-virker-piloten)
+    * [Fullt innsyn i logikken](#fullt-innsyn-i-logikken)
+    * [Ingen sending/overføring av detaljene i SAF-T-filen](#ingen-sendingoverføring-av-detaljene-i-saf-t-filen)
+    * [Begrensninger](#begrensninger)
+* [Teknologi](#teknologi)
+* [Om varehandelsindeksen og begrepet "omsetning"](#om-varehandelsindeksen-og-begrepet-omsetning)
+    * ["Omsetning"](#omsetning)
+* [Nærmere om overgangen fra bokføringsdata i SAF-T til rapportering](#nærmere-om-overgangen-fra-bokføringsdata-i-saf-t-til-rapportering)
+
 ## Bakgrunn
 Det nordiske samarbeidsprosjektet [Nordic Smart Government and Business](https://nordicsmartgovernment.org/) ser på en rekke ulike måter å forenkle hverdagen til bedrifter i Norge. Et av områdene er [Open Accounting and Simplified Reporting](https://nordicsmartgovernment.org/open-accounting). Denne piloten er en del av dette arbeidet.
 
@@ -52,10 +69,9 @@ I denne piloten utforsker vi følgende forenklinger:
 * Trinn 4: Brukeren skal slippe å forholde seg til rapporteringskravet (pkt 1 og 2)
     * Istedenfor å bli involvert i rapporteringen, kan brukeren få informasjon om at rapportering vil bli/er blitt utført. Dette kan for eksempel være under forutsetning av at brukeren på et tidligere tidspunkt har forhåndsgodkjent spesifikke rapporteringer
 
-
 Trinn 2 og trinn 3 kan jobbes med uavhengig av hverandre, og kan eventuelt løses i omvendt rekkefølge.
 
-### Hvorfor ikke bare overføre hele SAF-T-filen til SSB
+### Hvorfor ikke bare overføre hele SAF-T-filen til SSB?
 For SSB kan det være aktuelt å kreve at bedrifter som er pålagt rapportering, sender dem SAF-T-filen, slik at SSB dermed kan trekke ut de relevante tallene selv. Dette kan trolig forenkle prosessen med å rapportere til SSB. Men det er også ulemper med en slik løsning. De to viktigste er kanskje at bedriftene vil måtte begynne å gi fra seg mye mer detaljert informasjon om hvem som kjøper og selger hva og til hvilke priser enn de gjør idag, og at en slik tilnærming bare vil fungere for SSB, som har lovhjemmel til å be om informasjon fra bedrifter.
 
 Hvor mye detaljer bedrifter skal gi fra seg om kjøp og salg er et vanskelig spørsmål. Høsten 2021 var det et tema for en høring fra Skatteetaten - [Forslag om opplysningsplikt for salgs- og kjøpstransaksjoner](https://www.skatteetaten.no/rettskilder/type/horinger/opplysningsplikt-salgs-og-kjopstransaksjoner/). Noen av motforestillingene er utfordringene knyttet til personvern, bedriftshemmeligheter og også nasjonal sikkerhet.
@@ -196,7 +212,7 @@ Deretter filtreres alle transaksjonene etter konto, det vil si de som er kontert
 
 DebitAmount og CreditAmount summeres hver for seg for alle transaksjonene. Til slutt beregnes omsetning for perioden ved formelen -(DebitAmount - CreditAmount).
 
-## Nærmere om overgangen fra bokføringsdata til rapportering i kode
+## Nærmere om overgangen fra bokføringsdata i SAF-T til rapportering
 
 For effektiv filtrering og summering av tallene fra SAF-T-filen, gjøres ikke operasjonene på dataene slik de ligger i filen direkte. SAF-T-filen representerer dataene som en eneste lang tekststreng, med tagger som angir hva som er hva (jfr eksempelet over). For å utnytte datamaskinens egenskaper bedre, velger vi å gjøre et mellomsteg ved å sorteres dataene i kolonner à la Excel, i en såkalt "pandas dataframe".
 
@@ -288,7 +304,7 @@ df.loc[
     'DebitAmount',  # selecting the amount-columns
     'CreditAmount',]].sum())
 ```
-Dette uttrykket er egentlig todelt tredelt:
+Dette uttrykket er egentlig tredelt:
 
 Først er det et uttrykk med df.loc[] som er en måte å filtrere deler av innholdet i en dataframe på, som å aktivere filter i et Excel-ark. Hvilke kolonner det skal filtreres på, og hvilke betingelser, angis inne i hakeparantesen. Her ser vi at "Period" må ha verdi lik måned som er valg, og StandardAccountID må ha verdi fra og med 3000 og til (men ikke inkludert) 4000.
 
