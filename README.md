@@ -197,6 +197,103 @@ Deretter filtreres alle transaksjonene etter konto, det vil si de som er kontert
 DebitAmount og CreditAmount summeres hver for seg for alle transaksjonene. Til slutt beregnes omsetning for perioden ved formelen -(DebitAmount - CreditAmount).
 
 ## Nærmere om overgangen fra bokføringsdata til rapportering i kode
-TODO: Legg inn referanser til koden som tar SAF-T-data til df, og filtrerer og beregner omsetning.
 
+For effektiv filtrering og summering av tallene fra SAF-T-filen, gjøres ikke operasjonene på dataene slik de ligger i filen direkte. SAF-T-filen representerer dataene som en eneste lang tekststreng, med tagger som angir hva som er hva (jfr eksempelet over). For å utnytte datamaskinens egenskaper bedre, velger vi å gjøre et mellomsteg ved å sorteres dataene i kolonner à la Excel, i en såkalt "pandas dataframe".
+
+På den måten blir dataene klargjort for å mye mer effektiv filtrering og summering.
+
+Første del av koden som kjører er derfor transformasjon av dataene fra strukturen i SAF-T-filen, til en pandas dataframe. Dette gjøres ved å sende innholdet i SAF-T-filen til funksjonen ```gle2df```, som finnes i filen  ```saft2dataframe.py```.
+
+Resultatet av ```gle2df``` er en dataframe der dataene om transaksjonene er lagt ut i kolonner. Her er en eksempellinje fra testfilen, som viser kolonnene, der kolonnetitlene tilsvarer tag-er i SAF-T-filen:
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>TransactionID</th>
+      <th>Period</th>
+      <th>PeriodYear</th>
+      <th>TransactionDate</th>
+      <th>TransactionType</th>
+      <th>Description</th>
+      <th>SystemEntryDate</th>
+      <th>GLPostingDate</th>
+      <th>Line</th>
+      <th>RecordID</th>
+      <th>AccountID</th>
+      <th>StandardAccountID</th>
+      <th>None</th>
+      <th>AnalysisType</th>
+      <th>AnalysisID</th>
+      <th>AnalysisAmount</th>
+      <th>ValueDate</th>
+      <th>SourceDocumentID</th>
+      <th>DebitAmount</th>
+      <th>None</th>
+      <th>TaxType</th>
+      <th>TaxCode</th>
+      <th>TaxPercentage</th>
+      <th>TaxBase</th>
+      <th>TaxAmount</th>
+      <th>ReferenceNumber</th>
+      <th>SupplierID</th>
+      <th>CreditAmount</th>
+      <th>CustomerID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>44</th>
+      <td>1014</td>
+      <td>1</td>
+      <td>2017</td>
+      <td>2017-01-31</td>
+      <td>Normal</td>
+      <td>Leie maskiner januar</td>
+      <td>2017-02-01</td>
+      <td>2017-02-01</td>
+      <td>\n</td>
+      <td>3</td>
+      <td>2400</td>
+      <td>24</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2017-01-31</td>
+      <td>124</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>2001</td>
+      <td>20625.0</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+
+Når dataene om alle transaksjonene er tilgjengelig i en dataframe på denne måten, er neste steg å filtrere og summere. Det skjer i følgende kode, som ligger i ```index.html```:
+
+```python
+df.loc[
+    (df['Period'] == måned)     
+    & (df['StandardAccountID'] >= '3000')          
+    & (df['StandardAccountID'] < '4000')] \
+    [[  
+    'DebitAmount',  # selecting the amount-columns
+    'CreditAmount',]].sum())
+```
+df.loc[] er en måte å hente ut deler av innholdet i en dataframe på, og inne i hakeparantesen angis betingelsene, dvs at kolonnen "Period" må ha verdi lik måned som er valg, og StandardAccountID må ha verdi fra og med 3000 og til (men ikke inkludert) 4000.
+
+Når den filtreringen er gjort velges de to kolonnene som angis i neste hakeparantes, DebitAmount og CreditAmount, og til slutt summeres verdien i de to kolonnene:
+
+Til slutt kan omsetning beregnes:
+```python
+abs(omsetning['DebitAmount'] - omsetning['CreditAmount'])
+```
 
