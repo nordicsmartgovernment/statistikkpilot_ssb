@@ -277,7 +277,7 @@ Resultatet av ```gle2df``` er en dataframe der dataene om transaksjonene er lagt
   </tbody>
 </table>
 
-Når dataene om alle transaksjonene er tilgjengelig i en dataframe på denne måten, er neste steg å filtrere og summere. Det skjer i følgende kode, som ligger i ```index.html```:[1]
+Når dataene om alle transaksjonene er tilgjengelig i en dataframe på denne måten, er neste steg å filtrere og summere. Det skjer i kode som ligger i funksjonen ```finn_omsetning```, i filen ```index.html```:[1]
 
 ```python
 df.loc[
