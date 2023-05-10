@@ -169,7 +169,7 @@
   
     def send_inn():
         baseurl = "https://oa-reporting-api.ew.r.appspot.com/orid"
-        data = json.dumps(omsetning)
+        data = json.dumps(resultat)
         asyncio.ensure_future(api_kall(data, baseurl, "RA-0187"))
 
     </py-script>
