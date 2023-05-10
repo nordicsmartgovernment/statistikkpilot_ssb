@@ -277,7 +277,7 @@ Resultatet av ```gle2df``` er en dataframe der dataene om transaksjonene er lagt
   </tbody>
 </table>
 
-Når dataene om alle transaksjonene er tilgjengelig i en dataframe på denne måten, er neste steg å filtrere og summere. Det skjer i følgende kode, som ligger i ```index.html```:
+Når dataene om alle transaksjonene er tilgjengelig i en dataframe på denne måten, er neste steg å filtrere og summere. Det skjer i følgende kode, som ligger i ```index.html```:[1]
 
 ```python
 df.loc[
@@ -288,12 +288,19 @@ df.loc[
     'DebitAmount',  # selecting the amount-columns
     'CreditAmount',]].sum())
 ```
-df.loc[] er en måte å hente ut deler av innholdet i en dataframe på, og inne i hakeparantesen angis betingelsene, dvs at kolonnen "Period" må ha verdi lik måned som er valg, og StandardAccountID må ha verdi fra og med 3000 og til (men ikke inkludert) 4000.
+Dette uttrykket er egentlig todelt tredelt:
 
-Når den filtreringen er gjort velges de to kolonnene som angis i neste hakeparantes, DebitAmount og CreditAmount, og til slutt summeres verdien i de to kolonnene:
+Først er det et uttrykk med df.loc[] som er en måte å filtrere deler av innholdet i en dataframe på, som å aktivere filter i et Excel-ark. Hvilke kolonner det skal filtreres på, og hvilke betingelser, angis inne i hakeparantesen. Her ser vi at "Period" må ha verdi lik måned som er valg, og StandardAccountID må ha verdi fra og med 3000 og til (men ikke inkludert) 4000.
 
-Til slutt kan omsetning beregnes:
+Resultatet av df.loc[] er en ny dataframe. Så del to av uttrykket er å angi de to kolonnene vi er interessert i, i en ny hakeparantes, nemlig ```DebitAmount``` og ```CreditAmount```.
+
+Nå har vi en dataframe med kun de to ovennevnte kolonnene, og del tre er å angi at tallene i hver av disse kolonnene skal summeres, ved hjelp av ```sum()```.
+
+I koden blir resultatet av summeringen lagt til i en dataframe kalt resultat, slik at summene kan referers til som hhv resultat['DebitAmount'] og resultat['CreditAmount']. Da kan til slutt omsetningen beregnes som følger:
+
 ```python
--(omsetning['DebitAmount'] - omsetning['CreditAmount'])
+-(resultat['DebitAmount'] - resultat['CreditAmount'])
 ```
+Beregningen lagres som resultat['omsetning']
 
+[1] Merk at bare den delen av koden som er knyttet til filtrering og beregning er tatt med, så i ```index.html``` ligger denne dele dels begravet i annen kode som sørger for at resultatet blir vist på nettsiden.

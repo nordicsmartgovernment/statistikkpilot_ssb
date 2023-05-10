@@ -18,7 +18,7 @@ from saft2dataframe import gle2df
 
 saft_innhold = ""  # global variabel, teksten fra saft-fila
 saft = pd.DataFrame()  # global variabel
-omsetning = pd.DataFrame() # global variabel
+resultat = {} # global variabel
 orgnr: str = ""  #
 år: int = 0
 måned: int = 0

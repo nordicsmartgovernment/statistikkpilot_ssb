@@ -119,14 +119,14 @@
     <py-script>
 
     def finn_omsetning(df, år: int, måned: int) -> str:
-        global omsetning
+        global resultat
         global orgnr
-        omsetning = {
+        resultat = {
             'orgnr': orgnr,
             'år': int(år),
             'måned': måned,
         }
-        omsetning.update(dict(df.loc[
+        resultat.update(dict(df.loc[
                 (df['Period'] == måned)     
                 & (df['StandardAccountID'] >= '3000')          
                 & (df['StandardAccountID'] < '4000')] \
@@ -134,14 +134,14 @@
                 'DebitAmount',  # selecting the amount-columns
                 'CreditAmount',]].sum()))
 
-        omsetning.update({'omsetning': -(omsetning['DebitAmount'] - omsetning['CreditAmount'])})
+        resultat.update({'omsetning': -(resultat['DebitAmount'] - resultat['CreditAmount'])})
         
         display(f'''Orgnr: {orgnr} |
                 År: {år} |
                 Måned: {måned} |
-                Debit: {omsetning['DebitAmount']:,.2f} |
-                Kredit: {omsetning[ 'CreditAmount']:,.2f} |
-                Omsetning: {abs(omsetning['DebitAmount'] - omsetning['CreditAmount']):,.2f}''',
+                Debit: {resultat['DebitAmount']:,.2f} |
+                Kredit: {resultat[ 'CreditAmount']:,.2f} |
+                Omsetning: {-(resultat['DebitAmount'] - resultat['CreditAmount']):,.2f}''',
                 target="resultat_finn_omsetning")
 
         Element('a4').add_class('visible')
