@@ -15,7 +15,7 @@ For mer om hvert trinn, se avsnittet [Hvordan kan rapporteringen forenkles](#hvo
 
 ## Status
 I april 2023 fikk vi bekreftet fra pilotdeltager Amesto at piloten lyktes i å hente korrekte tall fra SAF-T-fil for en av deres kunder,
-jfr trinn 1.
+jfr trinn 1. I mai fikk vi bekreftelse på at beregnete tall i piloten for en SAF-T-fil som inkluderte april, tilsvarte de tallene som ble rapportert inn til kunden for april.
 
 I mai er det lagt til et midlertidig API for å ta imot tallene dersom brukeren velger "Send inn". Det jobbes med mekanisme for å formidle disse videre til SSB, og avklare tilstrekkelig grad av sikkerhet for denne piloten. Når disse endringene er på plass innebærer det en løsning på trinn 2.
 
@@ -219,6 +219,8 @@ For effektiv filtrering og summering av tallene fra SAF-T-filen, gjøres ikke op
 På den måten blir dataene klargjort for å mye mer effektiv filtrering og summering.
 
 Første del av koden som kjører er derfor transformasjon av dataene fra strukturen i SAF-T-filen, til en pandas dataframe. Dette gjøres ved å sende innholdet i SAF-T-filen til funksjonen ```gle2df```, som finnes i filen  ```saft2dataframe.py```.
+
+Et viktig steg i denne transformasjonen er å koble transaksjonene til standard kontoplan. Som det fremgår av utdraget av SAF-T-fila over, så er hver fakturalinje knyttet til ```AccountID```. Men dette trenger ikke å være en konto i tråd med norsk standard kontoplan, dette kan være bedriftens interne kontoplan. Isteden er det en egen del av SAF-T-fila, under elementet ```Masterfiles```der mappingen mellom AccountID og norsk standard kontoplan fremgår. I den norske SAF-T-standarden kodes disse kontoene med elementet ```StandardAccountID```.
 
 Resultatet av ```gle2df``` er en dataframe der dataene om transaksjonene er lagt ut i kolonner. Her er en eksempellinje fra testfilen, som viser kolonnene, der kolonnetitlene tilsvarer tag-er i SAF-T-filen:
 
