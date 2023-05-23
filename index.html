@@ -157,9 +157,8 @@
 
 
     <article id="a4" class="hidden">
-    <h1>Steg 4: Send inn tallene til SSB</h1>
-    <p>Klikk for å sende tallene til (for tiden ...) et midlertidig API, laget for denne piloten,
-    på Google Cloud.</p>
+    <h1><s>Steg 4: Send inn tallene til SSB</s></h1>
+    <p>Denne funksjonen er ikke implementert</p>
     <py-script>
 
     async def api_kall(data, baseurl, orid):
@@ -176,7 +175,7 @@
         asyncio.ensure_future(api_kall(data, baseurl, "RA-0187"))
 
     </py-script>
-    <button id="send_inn_tallene" py-onClick="send_inn()">Send inn</button>    
+    <button id="send_inn_tallene" py-onClick="send_inn()" disabled>Send inn</button>    
 
     <p id="resultat_send_inn_tallene"></p>
         
