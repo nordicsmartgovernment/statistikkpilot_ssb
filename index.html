@@ -134,14 +134,17 @@
                 'DebitAmount',  # selecting the amount-columns
                 'CreditAmount',]].sum()))
 
-        resultat.update({'omsetning': -(resultat['DebitAmount'] - resultat['CreditAmount'])})
+        # beregning av omsetning, og formatering til hele tusen kroner, derfor "/1000:.0f"
+        omsetning_i_tusen = f"{(-(resultat['DebitAmount'] - resultat['CreditAmount']))/1000:.0f}"
+
+        resultat.update({'omsetning_i_tusen': omsetning_i_tusen})
         
         display(f'''Orgnr: {orgnr} |
                 År: {år} |
                 Måned: {måned} |
                 Debit: {resultat['DebitAmount']:,.2f} |
                 Kredit: {resultat[ 'CreditAmount']:,.2f} |
-                Omsetning: {-(resultat['DebitAmount'] - resultat['CreditAmount']):,.2f}''',
+                Omsetning i hele tusen: {resultat['omsetning_i_tusen']}''',
                 target="resultat_finn_omsetning")
 
         Element('a4').add_class('visible')
@@ -164,7 +167,7 @@
         new_post = await request(f"{baseurl}/{orid}", body=data, method="POST", headers=headers)
         display(f"""Har POSTet følgende data:
             {await new_post.json()}
-            Statuskode: {new_post.status}. (201 betyr at det var vellykket!)""",
+            Statuskode: {new_post.status}. (20x betyr at det var vellykket!)""",
             target='resultat_send_inn_tallene')
   
     def send_inn():
