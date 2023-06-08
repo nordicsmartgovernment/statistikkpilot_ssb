@@ -7,7 +7,7 @@
         <link rel="icon" href="https://nordicsmartgovernment.org/themes/custom/newerst/favicon.ico" type="image/vnd.microsoft.icon">
         <link href="css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>        
 
     </head>
     <body>
@@ -40,7 +40,7 @@
     fra en oppdatert SAF-T-fil. Følg instruksjonene under. Se <a href="https://github.com/nordicsmartgovernment/statistikkpilot_ssb">Github</a> for 
     mer informasjon.</p>
     <p style="font-size: small">Du kan også skru på en "REPL" (Python-vindu for å kjøre kode):
-        <button id="display_debug" py-onClick="display_debug()">Vis REPL</button>  <button id="skjul_debug" py-onClick="skjul_debug()">Skjul REPL</button>
+        <button id="display_debug" py-click="display_debug()">Vis REPL</button>  <button id="skjul_debug" py-click="skjul_debug()">Skjul REPL</button>
     </p>
     <py-script>
 
@@ -151,7 +151,7 @@
         Element('a4').remove_class('hidden')
 
     </py-script>
-    <button id="finn_omsetning" py-onClick="finn_omsetning(saft, år, måned)">Finn omsetning</button>    
+    <button id="finn_omsetning" py-click="finn_omsetning(saft, år, måned)">Finn omsetning</button>    
     <p id="resultat_finn_omsetning"></p>
     </article>
 
@@ -175,7 +175,7 @@
         asyncio.ensure_future(api_kall(data, baseurl, "RA-0187"))
 
     </py-script>
-    <button id="send_inn_tallene" py-onClick="send_inn()" disabled>Send inn</button>    
+    <button id="send_inn_tallene" py-click="send_inn()" disabled>Send inn</button>    
 
     <p id="resultat_send_inn_tallene"></p>
         
@@ -185,7 +185,7 @@
     <h1>Debug: Her kan du kjøre egen kode</h1>
     <p>Bruk den såkalte REPL nedenfor for å kjøre egen kode. Dataene fra SAF-T-fila er tilgjengelige i variabelen <code>saft</code>.
     Etter at du har kjørt steg 3, er omsetningen tilgjengelig i variabelen <code>omsetning</code></p>
-    <py-repl auto-generate="true">
+    <py-repl id="debug-repl" auto-generate="true">
     # kjør denne cellen (Shift-Enter) og få liste over kolonnene
     # NB! Hvis du ikke har åpnet en SAF-T fil ennå er listen over kolonner tom
     saft.columns
